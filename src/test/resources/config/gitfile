@@ -1,0 +1,68 @@
+# Git Setup and Configuration
+git config --global user.name "Your Name"                    # Set your Git username
+git config --global user.email "youremail@example.com"        # Set your Git email
+git config --global core.editor "code --wait"                 # Set editor (VS Code in this case)
+git config --list                                              # Check Git configuration
+
+# Repository Initialization and Setup
+git init                                                      # Initialize a new Git repository
+git clone <repository-url>                                     # Clone an existing repository
+git status                                                     # Check the status of your repository
+
+# Staging and Committing Changes
+git add .                                                     # Stage all files for commit
+git add <file-path>                                           # Stage specific file
+git commit -m "Commit message"                                 # Commit with a message
+git commit --amend                                            # Amend the last commit
+
+# Branching and Merging
+git branch <branch-name>                                      # Create a new branch
+git checkout <branch-name>                                    # Switch to another branch
+git checkout -b <branch-name>                                 # Create and switch to a new branch
+git branch                                                    # List all branches
+git merge <branch-name>                                       # Merge a branch into the current branch
+git branch -d <branch-name>                                   # Delete a local branch
+
+# Remote Repositories
+git remote add origin <remote-repository-url>                 # Add a remote repository
+git remote -v                                                 # View configured remotes
+git push origin <branch-name>                                 # Push changes to remote
+git push -u origin <branch-name>                              # First time push with upstream setting
+git pull origin <branch-name>                                 # Pull changes from remote
+git fetch origin                                              # Fetch changes from remote (no merge)
+git remote remove origin                                       # Remove a remote repository
+
+# Handling Conflicts and History
+git log                                                       # View commit history
+git log --oneline                                              # Simplified commit history (one-line per commit)
+git diff                                                      # View differences between staged and unstaged changes
+git diff HEAD                                                 # View differences between working directory and last commit
+git checkout -- <file-path>                                   # Revert changes to a file (before commit)
+git reset --soft <commit-id>                                  # Reset to a commit but keep changes staged
+git reset --mixed <commit-id>                                 # Reset to a commit and unstage changes
+git reset --hard <commit-id>                                  # Reset to a commit and discard changes
+git rebase <branch-name>                                      # Rebase current branch with another
+git rebase --continue                                         # Continue rebase after resolving conflicts
+git rebase --abort                                            # Abort rebase
+
+# Working with Tags
+git tag <tag-name>                                            # Create a new tag
+git push origin <tag-name>                                    # Push a tag to remote
+git tag                                                       # List all tags
+git tag -d <tag-name>                                         # Delete a tag locally
+git push origin --delete <tag-name>                           # Delete a tag remotely
+
+# Cleaning Up
+git clean -f                                                 # Remove untracked files
+git clean -fd                                                # Remove untracked files and directories
+
+# Credential Management
+git config --global credential.helper cache                  # Store credentials in cache
+git config --global credential.helper store                  # Store credentials permanently
+git credential-cache exit                                    # Clear cached credentials
+
+# Git for Collaboration
+git status                                                    # Check the status of files
+git add <file>                                                # Stage a file for commit
+git diff                                                      # View detailed diff of changes
+git checkout -- <file-path>                                   # Undo changes to a file
