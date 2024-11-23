@@ -1,0 +1,98 @@
+import java.util.concurrent.*;
+
+// Other import statements...
+
+public class WorldsearchEU extends Basepage {
+
+    // Existing code...
+
+    public WorldsearchEU selectCountryAndSearchResult() throws Throwable {
+        // Existing code...
+
+        ExecutorService executorService = Executors.newFixedThreadPool(listofcountries.size());
+
+        List<Future<Void>> futures = new ArrayList<>();
+
+        for (WebElement currentCountry : listofcountries) {
+            futures.add(executorService.submit(() -> {
+                // Your existing code for processing each country
+                // Note: Wrap your existing code inside this lambda expression
+
+                return null;
+            }));
+        }
+
+        // Wait for all tasks to complete
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace(); // Handle exceptions appropriately
+            }
+        }
+
+        executorService.shutdown();
+
+        return this;
+    }
+
+    // Other methods...
+
+    public Jobpositionportalemailextract clickOnTestResultAndExtractEmails() throws Throwable {
+        // Existing code...
+
+        ExecutorService executorService = Executors.newFixedThreadPool(totalJobsAvailableInThePage);
+
+        List<Future<Void>> futures = new ArrayList<>();
+
+        for (WebElement jobPosition : jobPositionsInThePageFound) {
+            futures.add(executorService.submit(() -> {
+                // Your existing code for processing each job position
+                // Note: Wrap your existing code inside this lambda expression
+
+                return null;
+            }));
+        }
+
+        // Wait for all tasks to complete
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace(); // Handle exceptions appropriately
+            }
+        }
+
+        executorService.shutdown();
+
+        return new Jobpositionportalemailextract();
+    }
+
+    // Other methods...
+
+    private void executeInParallel(List<WebElement> elements, Consumer<WebElement> action) {
+        ExecutorService executorService = Executors.newFixedThreadPool(elements.size());
+
+        List<Future<Void>> futures = new ArrayList<>();
+
+        for (WebElement element : elements) {
+            futures.add(executorService.submit(() -> {
+                action.accept(element);
+                return null;
+            }));
+        }
+
+        // Wait for all tasks to complete
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace(); // Handle exceptions appropriately
+            }
+        }
+
+        executorService.shutdown();
+    }
+
+    // Other methods...
+}

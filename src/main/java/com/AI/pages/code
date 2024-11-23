@@ -1,0 +1,688 @@
+package com.AI.pages;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.AI.enums.WaitStrategy;
+
+import driver.DriverManager;
+
+public class WorldsearchEU extends Basepage{
+
+
+
+	// Constructor to receive WebDriver instance
+	public WorldsearchEU() {
+
+	}
+	By 	searchboxkeyword = By.xpath("//input[@id='occupations-search-input']");
+
+	By search = By.xpath("//button[@id='shared-search-bar-search-btn']");
+	By cookie = By.xpath("//a[contains(text(),'Accept all cookies')]");
+	By xbutton = By.xpath("//body/div[@id='cookie-consent-banner']/div[1]/div[1]/div[2]/button[1]/span[1]");
+
+	// not working By vancanciestxt = By.xpath("//section[@class=\"ecl-col-m-9 ng-star-inserted\"]/self::*/child::h2[1]");
+
+
+	By clickingonTestresults = By.xpath("//div[@class='ecl-u-border-top ecl-u-border-color-grey-15']/self::div/child::jv-result-summary/descendant::div//a[contains(text(),'Test')]");
+
+	By selectCountry = By.xpath("//ul[@id='jobs-by-location-list']/self::ul/descendant::a");
+
+	//By employer = By.xpath("//ecl-inpage-navigation-item[@id='inline-nav-employer']");
+	
+
+	By searchresultslist  = By.xpath("//div[@class=\"ecl-u-border-top ecl-u-border-color-grey-15\"]/self::div/descendant::a");
+	public WorldsearchEU acceptcookies() {
+		click(cookie, WaitStrategy.CLICKABLE);
+		return this;
+
+	}
+
+	public WorldsearchEU closebutton() {
+		click(xbutton, WaitStrategy.CLICKABLE);
+		return this;
+
+	}
+
+	public WorldsearchEU selectcountryandsearchresult() throws Throwable {
+		Thread.sleep(5000);
+		System.out.println("i am inside select country method ");
+		By selectCountry = By.xpath("//ul[@id='jobs-by-location-list']/self::ul/descendant::a");
+		List<WebElement> listofcountries = getLinksText(selectCountry);
+
+		List<String>  cl = new ArrayList<>();
+		for(WebElement c : listofcountries) {
+
+			cl.add(c.getText());
+
+		}
+		System.out.println(".............................................................................................................................");
+		System.out.println("                                                                                                                               ");
+
+		System.out.println("countries list :" + cl);
+		
+		System.out.println(".............................................................................................................................");
+		System.out.println("                                                                                                                               ");
+
+		for (int i = 0; i < listofcountries.size(); i++) {
+			WebElement currentCountry = listofcountries.get(i);
+			String countryName = currentCountry.getText();
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			System.out.println("Selected the country position " + i + ": " + countryName);
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+			wait.until(ExpectedConditions.presenceOfElementLocated(selectCountry));
+
+			WebDriverWait wait1 = new WebDriverWait(DriverManager.getDriver(), 10);
+			wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.spinner-wrapper")));
+
+			currentCountry.click();
+
+			Thread.sleep(2000);
+			DriverManager.getDriver().navigate().refresh();
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			System.out.println("navigated to the country job listings  :" + countryName);
+
+			enterkeywords();
+			Thread.sleep(4000);
+			pressEnterInSearchBox();
+
+
+			List<WebElement> foundlistjobpostings  = 	getLinksText(searchresultslist);
+
+			List<String> jt = new ArrayList<>();
+
+			for (WebElement e : foundlistjobpostings) {
+
+				jt.add(e.getText());
+			//	System.out.println(jt.size());
+				
+			}
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			//System.out.println(jt);
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			
+			
+			Thread.sleep(8000);
+			
+			boolean containsKeywords = foundlistjobpostings.stream()
+			        .anyMatch(jp -> {
+			            String jobTitle = jp.getText().toUpperCase();
+
+			            return jobTitle.contains("ICT TEST ANALYST") ||
+			            		jobTitle.contains("Test Analyst")||
+			                    jobTitle.contains("TEST MANAGER") ||
+			                    jobTitle.contains("SOFTWARE TESTER") ||
+			                    jobTitle.contains("AUTOMATION") ||
+			                    jobTitle.contains("TEST ENGINEER");
+			        });
+
+			if(containsKeywords) {
+				
+				
+				
+			
+			clickontestresultandextractingemails();
+
+			}
+			
+			else {
+				
+				
+			
+			DriverManager.getDriver().navigate().back();
+			DriverManager.getDriver().navigate().refresh();
+			
+			}
+			Thread.sleep(5000);
+
+			// Re-fetch the list of countries after refreshing the page
+			listofcountries = getLinksText(selectCountry);
+		}
+
+		return this;
+	}
+
+
+
+
+
+
+
+
+	public  WorldsearchEU  enterkeywords() throws InterruptedException{
+		Thread.sleep(5000);
+		sendkeys(searchboxkeyword, "ICT Test Analyst", WaitStrategy.VISIBLE);
+		return  this;
+	}
+
+
+	public WorldsearchEU pressEnterInSearchBox() throws Throwable {
+		WebElement searchBox = DriverManager.getDriver().findElement(searchboxkeyword);
+		searchBox.sendKeys(Keys.ENTER);
+		Thread.sleep(5000);
+		return this;
+	}
+
+	//	public WorldsearchEU clickSearchButton() throws InterruptedException {
+	//	    Thread.sleep(2000);
+	//	   
+	//System.out.println("going to click search button ");
+	//	    click(search, WaitStrategy.CLICKABLE);
+	//
+	//	    Thread.sleep(10000);
+	//	  
+	//	
+	//	    return this; // Assuming your method returns an instance of WorldsearchEU
+	//	}
+
+
+	//	public WorldsearchEU  resultsfoundofvacancies() throws TimeoutException{
+	//		
+	//		getText(vancanciestxt, WaitStrategy.VISIBLE);
+	//		
+	//		return this ;
+	//	}
+
+
+	public Jobpositionportalemailextract clickontestresultandextractingemails() throws Throwable {
+		
+		
+	    List<WebElement> jobpositionsinthepagefound = getLinksText(clickingonTestresults);
+
+	    int totaljobsavailableinthepage = jobpositionsinthepagefound.size();
+	    System.out.println("Total job listings in this page :  " + totaljobsavailableinthepage);
+
+//	    Map<String, List<String>> JobEmailMap = new HashMap<>();
+//
+//	    for (int i = 0; i < totaljobsavailableinthepage; i++) {
+//	        System.out.println(".............................................................................................................................");
+//	        System.out.println("                                                                                                                               ");
+//	        System.out.println("clicking job listing  " + i);
+//	        
+//	        
+//	        System.out.println("javascript method ");
+//	        Thread.sleep(2000);
+	        
+	        openNewTab(null);
+	        clickUsingJavaScript(jobpositionsinthepagefound.get(i));
+	        Thread.sleep(3000);
+	        
+	        // Click on the job listing
+	      //  click(clickingonTestresults, WaitStrategy.CLICKABLE);
+	        System.out.println(".............................................................................................................................");
+	        System.out.println("                                                                                                                               ");
+	        System.out.println("clicked on job position" + i);
+	        WebDriverWait waitSpinner = new WebDriverWait(DriverManager.getDriver(), 15);
+	        waitSpinner.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.spinner-wrapper")));
+
+	        
+
+	        // Wait for the email element to be present
+	        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+	        WebElement howToApplyElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='jv-details-how-to-apply']")));
+
+	        Thread.sleep(3000);
+	        // Extract emails from the "How to apply" element text
+	        List<String> extractedEmails = extractEmails(howToApplyElement.getText());
+
+	        // Print the extracted emails
+	        System.out.println("Extracted Emails: " + extractedEmails);
+	        DriverManager.getDriver().navigate().refresh();
+
+	        // Store job posting details immediately after extracting the email
+//	        String jobPosting = jobpositionsinthepagefound.get(i).getText();
+//	        JobEmailMap.put(jobPosting, extractedEmails);
+
+	        System.out.println(".............................................................................................................................");
+	        System.out.println("                                                                                                                               ");
+	        System.out.println("Emails extracted, moving backward");
+
+	        // Navigate back to the previous page
+	        DriverManager.getDriver().navigate().back();
+
+	        Thread.sleep(3000);
+	        // Re-fetch the list of job listings after navigating back
+	        jobpositionsinthepagefound = getLinksText(clickingonTestresults);
+	    }
+
+	    // Print the job postings and their corresponding emails
+//	    for (Map.Entry<String, List<String>> entry : JobEmailMap.entrySet()) {
+//	        System.out.println(entry.getKey() + " - Emails: " + entry.getValue());
+//	    }
+
+	    return new Jobpositionportalemailextract();
+	}
+
+
+	// Method to extract emails using regular expressions
+	private List<String> extractEmails(String text) {
+	    // Create a pattern for extracting emails within the specific structure
+	    String emailPattern = "Email:\\s*([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,})";
+	    Pattern pattern = Pattern.compile(emailPattern);
+	    Matcher matcher = pattern.matcher(text);
+
+	    // Find all matches
+	    List<String> emails = new ArrayList<>();
+	    while (matcher.find()) {
+	        emails.add(matcher.group(1));  // Use group(1) to capture the email address part
+	    }
+
+	    return emails;
+	}
+
+	
+	private void clickUsingJavaScript(WebElement element) {
+	    JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getDriver();
+	    executor.executeScript("arguments[0].click();", element);
+
+
+}
+	
+	
+	private void openNewTab(WebElement webelement) {
+		
+		JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+		js.executeScript("window.open");
+		
+		switchToNewTab();
+	}
+	
+	
+	 private void switchToNewTab() {
+	        // Get the handles of all open tabs
+	        Set<String> handles = DriverManager.getDriver().getWindowHandles();
+
+	        // Switch to the last opened tab (assuming it's the new tab)
+	        for (String handle : handles) {
+	            DriverManager.getDriver().switchTo().window(handle);
+	        }
+	        
+	        }
+	 
+	 private void closeTab() {
+			DriverManager.getDriver().close();
+			
+		}
+		
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 package com.AI.pages;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.AI.enums.WaitStrategy;
+
+import driver.DriverManager;
+
+public class WorldsearchEU extends Basepage{
+
+
+
+	// Constructor to receive WebDriver instance
+	public WorldsearchEU() {
+
+	}
+	By 	searchboxkeyword = By.xpath("//input[@id='occupations-search-input']");
+
+	By search = By.xpath("//button[@id='shared-search-bar-search-btn']");
+	By cookie = By.xpath("//a[contains(text(),'Accept all cookies')]");
+	By xbutton = By.xpath("//body/div[@id='cookie-consent-banner']/div[1]/div[1]/div[2]/button[1]/span[1]");
+
+	// not working By vancanciestxt = By.xpath("//section[@class=\"ecl-col-m-9 ng-star-inserted\"]/self::*/child::h2[1]");
+
+
+	By clickingonTestresults = By.xpath("//div[@class='ecl-u-border-top ecl-u-border-color-grey-15']/self::div/child::jv-result-summary/descendant::div//a[contains(text(),'Test')]");
+
+	By selectCountry = By.xpath("//ul[@id='jobs-by-location-list']/self::ul/descendant::a");
+
+	//By employer = By.xpath("//ecl-inpage-navigation-item[@id='inline-nav-employer']");
+	
+
+	By searchresultslist  = By.xpath("//div[@class=\"ecl-u-border-top ecl-u-border-color-grey-15\"]/self::div/descendant::a");
+	public WorldsearchEU acceptcookies() {
+		click(cookie, WaitStrategy.CLICKABLE);
+		return this;
+
+	}
+
+	public WorldsearchEU closebutton() {
+		click(xbutton, WaitStrategy.CLICKABLE);
+		return this;
+
+	}
+
+	public WorldsearchEU selectcountryandsearchresult() throws Throwable {
+		Thread.sleep(5000);
+		System.out.println("i am inside select country method ");
+		By selectCountry = By.xpath("//ul[@id='jobs-by-location-list']/self::ul/descendant::a");
+		List<WebElement> listofcountries = getLinksText(selectCountry);
+
+		List<String>  cl = new ArrayList<>();
+		for(WebElement c : listofcountries) {
+
+			cl.add(c.getText());
+
+		}
+		System.out.println(".............................................................................................................................");
+		System.out.println("                                                                                                                               ");
+
+		System.out.println("countries list :" + cl);
+		
+		System.out.println(".............................................................................................................................");
+		System.out.println("                                                                                                                               ");
+
+		for (int i = 0; i < listofcountries.size(); i++) {
+			WebElement currentCountry = listofcountries.get(i);
+			String countryName = currentCountry.getText();
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			System.out.println("Selected the country position " + i + ": " + countryName);
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+			wait.until(ExpectedConditions.presenceOfElementLocated(selectCountry));
+
+			WebDriverWait wait1 = new WebDriverWait(DriverManager.getDriver(), 10);
+			wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.spinner-wrapper")));
+
+			currentCountry.click();
+
+			Thread.sleep(2000);
+			DriverManager.getDriver().navigate().refresh();
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			System.out.println("navigated to the country job listings  :" + countryName);
+
+			enterkeywords();
+			Thread.sleep(4000);
+			pressEnterInSearchBox();
+
+
+			List<WebElement> foundlistjobpostings  = 	getLinksText(searchresultslist);
+
+			List<String> jt = new ArrayList<>();
+
+			for (WebElement e : foundlistjobpostings) {
+
+				jt.add(e.getText());
+			//	System.out.println(jt.size());
+				
+			}
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			//System.out.println(jt);
+
+			System.out.println(".............................................................................................................................");
+			System.out.println("                                                                                                                               ");
+
+			
+			
+			Thread.sleep(8000);
+			
+			boolean containsKeywords = foundlistjobpostings.stream()
+			        .anyMatch(jp -> {
+			            String jobTitle = jp.getText().toUpperCase();
+
+			            return jobTitle.contains("ICT TEST ANALYST") ||
+			            		jobTitle.contains("Test Analyst")||
+			                    jobTitle.contains("TEST MANAGER") ||
+			                    jobTitle.contains("SOFTWARE TESTER") ||
+			                    jobTitle.contains("AUTOMATION") ||
+			                    jobTitle.contains("TEST ENGINEER");
+			        });
+
+			if(containsKeywords) {
+				
+				
+				
+			
+			clickontestresultandextractingemails();
+
+			}
+			
+			else {
+				
+				
+			
+			DriverManager.getDriver().navigate().back();
+			DriverManager.getDriver().navigate().refresh();
+			
+			}
+			Thread.sleep(5000);
+
+			// Re-fetch the list of countries after refreshing the page
+			listofcountries = getLinksText(selectCountry);
+		}
+
+		return this;
+	}
+
+
+
+
+
+
+
+
+	public  WorldsearchEU  enterkeywords() throws InterruptedException{
+		Thread.sleep(5000);
+		sendkeys(searchboxkeyword, "ICT Test Analyst", WaitStrategy.VISIBLE);
+		return  this;
+	}
+
+
+	public WorldsearchEU pressEnterInSearchBox() throws Throwable {
+		WebElement searchBox = DriverManager.getDriver().findElement(searchboxkeyword);
+		searchBox.sendKeys(Keys.ENTER);
+		Thread.sleep(5000);
+		return this;
+	}
+
+	//	public WorldsearchEU clickSearchButton() throws InterruptedException {
+	//	    Thread.sleep(2000);
+	//	   
+	//System.out.println("going to click search button ");
+	//	    click(search, WaitStrategy.CLICKABLE);
+	//
+	//	    Thread.sleep(10000);
+	//	  
+	//	
+	//	    return this; // Assuming your method returns an instance of WorldsearchEU
+	//	}
+
+
+	//	public WorldsearchEU  resultsfoundofvacancies() throws TimeoutException{
+	//		
+	//		getText(vancanciestxt, WaitStrategy.VISIBLE);
+	//		
+	//		return this ;
+	//	}
+
+
+	/**
+	 * @return
+	 * @throws Throwable
+	 */
+	public Jobpositionportalemailextract clickontestresultandextractingemails() throws Throwable {
+		
+		
+	    List<WebElement> jobpositionsinthepagefound = getLinksText(clickingonTestresults);
+
+	    int totaljobsavailableinthepage = jobpositionsinthepagefound.size();
+	    System.out.println("Total job listings in this page :  " + totaljobsavailableinthepage);
+
+	    Map<String, List<String>> JobEmailMap = new HashMap<>();
+
+  for (int i = 0; i < totaljobsavailableinthepage; i++) {
+      
+	      
+	        openNewTab(jobpositionsinthepagefound.get(i));
+	        switchToNewTab(jobpositionsinthepagefound.get(i));
+	       
+	        Thread.sleep(3000);
+	        
+	        // Click on the job listing
+	      //  click(clickingonTestresults, WaitStrategy.CLICKABLE);
+	        System.out.println(".............................................................................................................................");
+	        System.out.println("                                                                                                                               ");
+	        System.out.println("clicked on job position" + i);
+	        WebDriverWait waitSpinner = new WebDriverWait(DriverManager.getDriver(), 15);
+	        waitSpinner.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.spinner-wrapper")));
+
+	        
+
+	        // Wait for the email element to be present
+	        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+	        WebElement howToApplyElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='jv-details-how-to-apply']")));
+
+	        Thread.sleep(3000);
+	        // Extract emails from the "How to apply" element text
+	        List<String> extractedEmails = extractEmails(howToApplyElement.getText());
+
+	        // Print the extracted emails
+	        System.out.println("Extracted Emails: " + extractedEmails);
+	        DriverManager.getDriver().navigate().refresh();
+
+	        // Store job posting details immediately after extracting the email
+//	        String jobPosting = jobpositionsinthepagefound.get(i).getText();
+//	        JobEmailMap.put(jobPosting, extractedEmails);
+
+	        System.out.println(".............................................................................................................................");
+	        System.out.println("                                                                                                                               ");
+	        System.out.println("Emails extracted, moving backward");
+
+	        // Navigate back to the previous page
+	        DriverManager.getDriver().navigate().back();
+
+	        Thread.sleep(3000);
+	        // Re-fetch the list of job listings after navigating back
+	        jobpositionsinthepagefound = getLinksText(clickingonTestresults);
+	    }
+
+	    // Print the job postings and their corresponding emails
+//	    for (Map.Entry<String, List<String>> entry : JobEmailMap.entrySet()) {
+//	        System.out.println(entry.getKey() + " - Emails: " + entry.getValue());
+//	    }
+
+	    return new Jobpositionportalemailextract();
+	}
+
+
+	// Method to extract emails using regular expressions
+	private List<String> extractEmails(String text) {
+	    // Create a pattern for extracting emails within the specific structure
+	    String emailPattern = "Email:\\s*([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,})";
+	    Pattern pattern = Pattern.compile(emailPattern);
+	    Matcher matcher = pattern.matcher(text);
+
+	    // Find all matches
+	    List<String> emails = new ArrayList<>();
+	    while (matcher.find()) {
+	        emails.add(matcher.group(1));  // Use group(1) to capture the email address part
+	    }
+
+	    return emails;
+	}
+
+	
+	private void clickUsingJavaScript(WebElement jobpositionsinthepagefound) {
+	    JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getDriver();
+	    executor.executeScript("arguments[0].click();", jobpositionsinthepagefound);
+
+
+}
+	
+	
+	private void openNewTab(WebElement webelement) {
+	    JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+	    js.executeScript("window.open('about:blank');");
+	    switchToNewTab(webelement);
+	}
+
+	
+	private void switchToNewTab(WebElement jobpositionsinthepagefound) {
+	    List<String> handles = new ArrayList<>(DriverManager.getDriver().getWindowHandles());
+	    DriverManager.getDriver().switchTo().window(handles.get(handles.size() - 1));
+	    clickUsingJavaScript(jobpositionsinthepagefound.getAt));
+	}
+	private void closeTab() {
+	    switchToMainTab(); // Switch back to the main tab before closing
+	    DriverManager.getDriver().close();
+	}
+
+	private void switchToMainTab() {
+	    List<String> handles = new ArrayList<>(DriverManager.getDriver().getWindowHandles());
+
+	    // Assuming the first handle is your main tab
+	    String mainTabHandle = handles.get(0);
+
+	    DriverManager.getDriver().switchTo().window(mainTabHandle);
+	}
+
+		
+	 
+}
+}
