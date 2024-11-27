@@ -1,0 +1,48 @@
+UI_Automation2024 (GitHub Repo)
+│
+├── IntelliJ (IDE)
+│   ├── Code written in Java using Selenium (UI Automation)
+│   ├── Maven is configured for project management and dependencies
+│   ├── Test Framework: Selenium (JUnit/TestNG for running tests)
+│   └── Push code to GitHub Repo (via Git)
+│
+├── GitHub Repository (UI_Automation2024)
+│   ├── Source Code (Java, Selenium, Maven POM file)
+│   └── Jenkins pulls from this repository
+│
+├── Jenkins (CI/CD Pipeline)
+│   ├── SCM Polling/Webhook
+│   ├── Clone Code from GitHub
+│   ├── Maven Build Lifecycle:
+│   │   ├── `clean` (clean old builds)
+│   │   ├── `validate` (ensure project is correct)
+│   │   ├── `compile` (compile source code)
+│   │   ├── `test` (run tests using Selenium - JUnit/TestNG)
+│   │   ├── `package` (bundle code into JAR/WAR)
+│   │   ├── `install` (install into local repository)
+│   │   ├── `deploy` (deploy to remote repository, optional)
+│   ├── Build Docker Image for Test Execution
+│   ├── Push Docker Image to Docker Registry
+│   ├── Run Tests inside Docker Containers (using Selenium Grid)
+│   │   ├── Test on Chrome (via Docker Container)
+│   │   ├── Test on Firefox (via Docker Container)
+│   │   └── Multi-Browser/OS Testing using Docker Compose (optional)
+│   └── Monitor Results (Jenkins Dashboard, Test Reports)
+│
+├── Docker (Containers for Selenium Testing)
+│   ├── Dockerfile for Selenium Tests
+│   │   ├── Install Java, Maven, Selenium
+│   │   ├── Configure WebDriver for Chrome/Firefox
+│   │   ├── Run Tests in Browser Containers
+│   │   └── Multi-Browser/OS Testing using Docker Compose (optional)
+│   └── Docker Registry (store and share built Docker images)
+│
+├── Terraform (Provision VMs in GCP)
+│   ├── Define VM Resources for Jenkins or Test Execution
+│   ├── Create VMs in GCP (Jenkins, Docker Containers, etc.)
+│   └── Scale VMs for Parallel Testing (if required)
+│
+└── GCP (Cloud Infrastructure)
+    ├── VM with Jenkins (if needed for scaling)
+    ├── VM for Docker Containers (for scaling test execution)
+    └── Cloud Storage for Test Results & Logs
