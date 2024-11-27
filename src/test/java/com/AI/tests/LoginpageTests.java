@@ -2,9 +2,10 @@ package com.AI.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.testng.annotations.Test;
+
 
 import driver.DriverManager;
+import org.testng.annotations.Test;
 
 public class LoginpageTests  extends BaseTest{
 
