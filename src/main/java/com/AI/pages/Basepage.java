@@ -62,7 +62,7 @@ public class Basepage {
 
 	public void 	signinpage(By by, WaitStrategy waitStrategy, WebDriver driver){
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
 		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
 

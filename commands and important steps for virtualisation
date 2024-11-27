@@ -1,0 +1,58 @@
+Written code in intellij using maven project  -- selenium , testng
+
+using git pushed this code to hithub
+
+created a new VM using GCP and then installed jenkins -> inside jenkins did configuration for the maven , java, git path
+
+inside the vm downloaded jdk , maven , git , chrome installations
+
+updated the pom -> with maven plugins for proper maven build life cycle acheivements
+
+
+now using jenkins created a new job with a freestyle project and runned the job .
+to view the running script inside vm doing
+
+
+
+[root@jenkins-master bin]# cat /etc/os-release
+
+// VM PROPERTIES
+
+NAME="Rocky Linux"
+VERSION="8.10 (Green Obsidian)"
+ID="rocky"
+ID_LIKE="rhel centos fedora"
+VERSION_ID="8.10"
+PLATFORM_ID="platform:el8"
+PRETTY_NAME="Rocky Linux 8.10 (Green Obsidian)"
+ANSI_COLOR="0;32"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:rocky:rocky:8:GA"
+HOME_URL="https://rockylinux.org/"
+BUG_REPORT_URL="https://bugs.rockylinux.org/"
+SUPPORT_END="2029-05-31"
+ROCKY_SUPPORT_PRODUCT="Rocky-Linux-8"
+ROCKY_SUPPORT_PRODUCT_VERSION="8.10"
+REDHAT_SUPPORT_PRODUCT="Rocky Linux"
+REDHAT_SUPPORT_PRODUCT_VERSION="8.10"
+[root@jenkins-master bin]#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+1. Install Required Packages for GUI
+First, you attempted to install the graphical environment by using the following commands to install Xfce and the necessary graphical components.
+
+bash
+Copy code
+sudo dnf groupinstall "Xfce" "X Window System" -y
+However, these commands didn't work because the group Xfce and X Window System were not available. You then installed a minimal graphical environment manually by installing xorg-x11-server-Xvfb and other packages.
+
+bash
+Copy code
+sudo dnf install xorg-x11-server-Xvfb xterm -y
+2. Install Chrome on Your Machine
+You installed Google Chrome on your system so that Selenium tests can run in a GUI environment.
+
+bash
+Copy code
+sudo dnf install google-chrome-stable -y
+If google-chrome is already installed, you can verify the installation by checking its version:
+
+bash
+Copy code
+google-chrome --version
+3. Install and Configure a Display Manager (LightDM)
+Since you wanted a graphical user interface, you needed to install a display manager. First, you attempted to install LightDM (a lightweight display manager), but there were issues with installation because lightdm wasn't available in your current repositories.
+
+bash
+Copy code
+sudo dnf install lightdm lightdm-gtk-greeter -y
+This failed due to package unavailability. As an alternative, you could either try GDM (GNOME Display Manager) or install Xfce.
+
+4. Switching the Display Manager to LightDM
+You were able to install LightDM and encountered an issue with enabling it because GDM (GNOME Display Manager) was already the default.
+
+First, you disabled and stopped GDM to allow LightDM to take over as the default display manager:
+bash
+Copy code
+sudo systemctl disable gdm
+sudo systemctl stop gdm
+Then, you enabled LightDM and started it:
+bash
+Copy code
+sudo systemctl enable lightdm
+sudo systemctl start lightdm
+5. Verify the Setup
+After completing the steps above, you should be able to access the graphical user interface by rebooting the system:
+
+bash
+Copy code
+sudo reboot
+Once your system reboots, you should see the LightDM login screen. You can now log in and start using the graphical interface.
+
+Optional: Troubleshoot or Try GDM Instead
+If LightDM wasn't working as expected, you can fall back on GDM, which is the default on many Linux systems. To enable GDM, you can use these commands:
+
+bash
+Copy code
+sudo systemctl enable gdm
+sudo systemctl start gdm
+6. Selenium Tests with UI
+With the graphical environment in place and Chrome installed, you can now run Selenium tests that require a UI environment.
+
+Configure your DriverFactory class (which you already did) to use ChromeDriver.
+Recap of Key Steps:
+Install X11/Xfce and required GUI packages (you installed xorg-x11-server-Xvfb).
+Install Google Chrome (google-chrome-stable).
+Install and configure LightDM (or optionally GDM).
+Disable GDM, enable LightDM, and reboot.
+Run Selenium tests with a graphical user interface.
