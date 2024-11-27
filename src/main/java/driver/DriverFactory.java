@@ -28,6 +28,11 @@ public final class DriverFactory {
 			// ChromeOptions to configure Chrome browser settings
 			ChromeOptions chromeOptions = new ChromeOptions();
 			chromeOptions.addArguments("--incognito");
+			chromeOptions.setBinary("/usr/bin/google-chrome");
+			chromeOptions.addArguments("--incognito");
+			chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--remote-allow-origins=*");
+
+
 			// Add any Chrome options here (optional, e.g. headless mode)
 			// chromeOptions.addArguments("--headless"); // Example: run headless
 			// chromeOptions.addArguments("--disable-extensions"); // Example: disable extensions
@@ -36,6 +41,7 @@ public final class DriverFactory {
 				// Use ChromeOptions for remote WebDriver setup
 				//chromeOptions.setCapability("browserName", BrowserType.CHROME);
 				driver = new RemoteWebDriver(new URL("http://44.213.77.244:4444"), chromeOptions);
+
 			} else {
 				// Use ChromeOptions for local ChromeDriver setup
 				WebDriverManager.chromedriver().setup();
