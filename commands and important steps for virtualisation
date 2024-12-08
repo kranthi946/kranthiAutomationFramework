@@ -1,6 +1,6 @@
 Written code in intellij using maven project  -- selenium , testng
 
-using git pushed this code to hithub
+using git pushed this code to github
 
 created a new VM using GCP and then installed jenkins -> inside jenkins did configuration for the maven , java, git path
 
