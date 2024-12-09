@@ -4,7 +4,7 @@
 
 
 
-  <!-- Single test block with browser parameter -->
+  <!-- Single test block with browser parameter    .. -->
   <test name="ChromeTest">
     <parameter name="browser" value="chrome"/>
     <classes>
