@@ -25,7 +25,7 @@ public class ListenerClass implements ITestListener {
 	@Override
 	public void onTestFailure(ITestResult result) {
 		ITestListener.super.onTestFailure(result);
-		ScreenshotsMethod.takescreenshotmethod();
+		//ScreenshotsMethod.takescreenshotmethod();
 	}
 
 	@Override

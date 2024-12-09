@@ -198,7 +198,7 @@ public void 	signinbutton(By by, WaitStrategy waitStrategy){
 		 * System.out.println(li.get(i).getText());
 		 * }
 		 */
-		li.forEach(e -> System.out.println(e.getText()));
+		//li.forEach(e -> System.out.println(e.getText()));
 		return li;
 	}
 

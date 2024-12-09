@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    environment {
+        VM_IP = '34.31.193.88'  // External IP of your VM
+        VM_USER = 'kranthikumarkattatech'  // Username for SSH login
+        VM_PASSWORD = 'kranthi'  // Directly passing the password (NOT SECURE)
+    }
+    stages {
+        stage('SSH into VM and List Files') {
+            steps {
+                script {
+                    // Define the remote connection details
+                    def remote = [:]
+                    remote.name = 'remote-vm'
+                    remote.host = env.VM_IP
+                    remote.user = env.VM_USER
+                    remote.password = env.VM_PASSWORD  // Using the plain password directly
+                    remote.allowAnyHosts = true
+
+                    // Run the SSH command to list files in the VM's home directory
+                    sshCommand remote: remote, command: 'ls -la'
+                }
+            }
+        }
+    }
+}
+
+

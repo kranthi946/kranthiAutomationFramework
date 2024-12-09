@@ -79,6 +79,7 @@ public class BaseTest {
 			
 		Driver.quitDriver();
 
-		Desktop.getDesktop().browse(new File(FrameworkConstants.getReportPath()).toURI());
+		// here also we are opening screenshot url we should not do this always right things at right place
+		//Desktop.getDesktop().browse(new File(FrameworkConstants.getReportPath()).toURI());
 	}
 }

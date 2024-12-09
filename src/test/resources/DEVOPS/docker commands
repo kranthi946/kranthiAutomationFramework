@@ -1,0 +1,20 @@
+# Stop all running containers
+docker stop $(docker ps -aq)  # Stops all running containers
+
+# Remove all containers (including stopped ones)
+docker rm $(docker ps -aq)  # Removes all containers
+
+# Remove all images
+docker rmi $(docker images -q)  # Removes all images
+
+# Remove unused volumes
+docker volume prune -f  # Remove all unused volumes
+
+# Remove unused networks
+docker network prune -f  # Remove all unused networks
+
+# Remove build cache
+docker builder prune -f  # Remove all build cache
+
+# Full system cleanup (containers, images, volumes, and networks)
+docker system prune -a -f  # Removes everything not in use
