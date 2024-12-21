@@ -26,3 +26,22 @@ git push origin main
 # 9. If you need to force push (use with caution)
 git push origin main --force
 
+
+
+
+// if repo is pointed to old one and want to move changes to new one
+
+# Step 1: Check current remote URL
+git remote -v
+
+# Step 2: Remove the incorrect remote URL
+git remote remove origin
+
+# Step 3: Add the correct remote URL
+git remote add origin https://github.com/Anyonecandoit/YourRepo.git
+
+# Step 4: Push the code to the new remote repository
+git push -u origin main
+
+# Step 5: Verify the remote URL is updated correctly
+git remote -v
