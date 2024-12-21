@@ -1,0 +1,33 @@
+# 1. Create a new script file in nano
+nano make_repos_private.sh
+
+# 2. Paste the following script code in the nano editor:
+
+#!/bin/zsh
+
+# Step 1: Log in to GitHub using GitHub CLI (gh)
+echo "Logging into GitHub..."
+gh auth login --with-token
+
+# Step 2: Fetch the list of all repositories from GitHub for your account
+echo "Fetching repositories..."
+repos=$(gh repo list --json name --limit 100 --jq '.[].name')
+
+# Step 3: Loop through each repository and change visibility to private
+for REPO in $repos; do
+  echo "Changing visibility of $REPO to private..."
+  gh repo edit "$REPO" --visibility private
+  echo "$REPO visibility changed to private."
+done
+
+# Step 4: Confirmation message
+echo "All repositories have been updated to private."
+
+# 3. After pasting the script, press `Ctrl + X` to exit nano.
+# 4. Press `Y` to confirm saving, and then press `Enter` to save the file with the name `make_repos_private.sh`.
+
+# 5. Make the script executable
+chmod +x make_repos_private.sh
+
+# 6. Run the script to change the visibility of all repositories to private
+./make_repos_private.sh
