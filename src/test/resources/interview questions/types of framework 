@@ -1,0 +1,8 @@
+hat are the different types of frameworks?
+Page Object Model: Page Object Model (POM), is a design pattern in Selenium that creates an object repository for storing all web elements. It is useful in reducing code duplication and maintenance. In-Page Object Model, Each web page of an application as a class file. Each class file will contain only corresponding web page elements
+
+Data-Driven Framework: When the entire test data is generated from some external files like Excel, CSV, XML, or some database table, then it is called Data Driven framework
+
+Keyword Driven Framework: When only the instructions and operations are written in a different file like an Excel worksheet, it is called Keyword Driven framework.
+
+Hybrid Framework: Any combination above frameworks like POM, Data-Driven, Keyword Driven is called a Hybrid Framework.

@@ -1,5 +1,11 @@
 package com.AI.tests;
 
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import java.awt.Desktop;
 import java.io.File;
 import java.util.List;
@@ -16,7 +22,12 @@ import com.AI.utils.PropertyUtils;
 import driver.Driver;
 
 public class BaseTest {
+	
+	
+	
 	private List<WebDriver> drivers;
+	
+	
 	protected BaseTest() {
 
 	}
@@ -41,16 +52,21 @@ public class BaseTest {
 		 // ExtentReport.flushReports();     //  moving this to listeners
 		
 	} */
-	
-	
-	
-	@BeforeMethod
+
+
+
+
+	@BeforeMethod(alwaysRun=true)
+
 // here IO Exception is  coming  to the method because driver is taking the data from property file and in the get value method it is having exception IO .So it will be populate same to driver .
 	
 	
 	// once we apply null check condition to the value of get property key , the IO exception will be changed to "Exception" due to implementation of new method.
 	protected void setUp() throws Exception {
 
+		
+		
+		//   browser = System.getProperty("browser", "chrome");   this was from xml to main test to base test it will flow to driver class 
 
 		String browser = PropertyUtils.get(ConfigProperties.BROWSER);
 		Driver.initDriver(browser);
@@ -63,6 +79,8 @@ public class BaseTest {
 		    
 		   
 		}
+	
+
 	
 
 	
@@ -83,3 +101,6 @@ public class BaseTest {
 		//Desktop.getDesktop().browse(new File(FrameworkConstants.getReportPath()).toURI());
 	}
 }
+
+
+

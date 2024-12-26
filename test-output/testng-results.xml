@@ -1,25 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-09-28T22:21:37 IST" name="Default suite" finished-at="2024-09-28T22:21:44 IST" duration-ms="6659">
+  <suite started-at="2024-12-21T13:21:13 IST" name="Suite" finished-at="2024-12-21T13:21:13 IST" duration-ms="115">
     <groups>
+      <group name="sanity">
+        <method signature="TechieDelightTest.getalllinks()[pri:0, instance:com.AI.tests.TechieDelightTest@49e53c76]" name="getalllinks" class="com.AI.tests.TechieDelightTest"/>
+      </group> <!-- sanity -->
     </groups>
-    <test started-at="2024-09-28T22:21:37 IST" name="Default test" finished-at="2024-09-28T22:21:44 IST" duration-ms="6659">
-      <class name="com.AI.tests.HomepageTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.AI.tests.HomepageTest@506ae4d4]" started-at="2024-09-28T22:21:37 IST" name="setUp" finished-at="2024-09-28T22:21:43 IST" duration-ms="5229" status="PASS">
+    <test started-at="2024-12-21T13:21:13 IST" name="Sanity Test" finished-at="2024-12-21T13:21:13 IST" duration-ms="115">
+      <class name="com.AI.tests.TechieDelightTest">
+        <test-method signature="getalllinks()[pri:0, instance:com.AI.tests.TechieDelightTest@49e53c76]" started-at="2024-12-21T13:21:13 IST" name="getalllinks" finished-at="2024-12-21T13:21:13 IST" duration-ms="60" status="FAIL">
+          <exception class="java.lang.NullPointerException">
+            <message>
+              <![CDATA[Cannot invoke "org.openqa.selenium.WebDriver.findElements(org.openqa.selenium.By)" because the return value of "driver.DriverManager.getDriver()" is null]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.findElements(org.openqa.selenium.By)" because the return value of "driver.DriverManager.getDriver()" is null
+at com.AI.pages.Basepage.getLinksText(Basepage.java:198)
+at com.AI.pages.TechiedelightPage.gettext(TechiedelightPage.java:17)
+at com.AI.tests.TechieDelightTest.getalllinks(TechieDelightTest.java:20)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+at org.testng.TestRunner.privateRun(TestRunner.java:794)
+at org.testng.TestRunner.run(TestRunner.java:596)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
+at org.testng.SuiteRunner.run(SuiteRunner.java:276)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
+at org.testng.TestNG.runSuites(TestNG.java:1063)
+at org.testng.TestNG.run(TestNG.java:1031)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="test3()[pri:0, instance:com.AI.tests.HomepageTest@506ae4d4]" started-at="2024-09-28T22:21:43 IST" name="test3" finished-at="2024-09-28T22:21:43 IST" duration-ms="66" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- test3 -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.AI.tests.HomepageTest@506ae4d4]" started-at="2024-09-28T22:21:43 IST" name="tearDown" finished-at="2024-09-28T22:21:44 IST" duration-ms="1328" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- com.AI.tests.HomepageTest -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+        </test-method> <!-- getalllinks -->
+      </class> <!-- com.AI.tests.TechieDelightTest -->
+    </test> <!-- Sanity Test -->
+  </suite> <!-- Suite -->
 </testng-results>

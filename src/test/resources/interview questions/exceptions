@@ -1,0 +1,170 @@
+
+### 1. **NoSuchElementException**
+   - **Reason:** Element not found using the specified locator.
+   - **Example:**
+     ```java
+     driver.findElement(By.id("nonExistentId")); // NoSuchElementException
+     ```
+
+### 2. **TimeoutException**
+   - **Reason:** Element not found within the specified time.
+   - **Example:**
+     ```java
+     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+     wait.until(ExpectedConditions.elementToBeClickable(By.id("submit"))); // TimeoutException
+     ```
+
+### 3. **WebDriverException**
+   - **Reason:** General WebDriver error (e.g., browser closed).
+   - **Example:**
+     ```java
+     driver.quit();
+     driver.findElement(By.id("submit")); // WebDriverException
+     ```
+
+### 4. **ElementNotVisibleException**
+   - **Reason:** Element exists but is not visible.
+   - **Example:**
+     ```java
+     WebElement element = driver.findElement(By.id("hiddenElement"));
+     element.click(); // ElementNotVisibleException
+     ```
+
+### 5. **NoSuchSessionException**
+   - **Reason:** WebDriver session is no longer active.
+   - **Example:**
+     ```java
+     driver.quit();
+     driver.findElement(By.id("submit")); // NoSuchSessionException
+     ```
+
+### 6. **NoAlertPresentException**
+   - **Reason:** Attempting to interact with an alert that is not present.
+   - **Example:**
+     ```java
+     Alert alert = driver.switchTo().alert(); // NoAlertPresentException if no alert exists
+     ```
+
+### 7. **NoSuchWindowException**
+   - **Reason:** Trying to switch to a non-existent window.
+   - **Example:**
+     ```java
+     driver.switchTo().window("invalidWindowHandle"); // NoSuchWindowException
+     ```
+
+### 8. **StaleElementReferenceException**
+   - **Reason:** Element is no longer attached to the DOM.
+   - **Example:**
+     ```java
+     WebElement element = driver.findElement(By.id("someElement"));
+     driver.navigate().refresh();
+     element.click(); // StaleElementReferenceException
+     ```
+
+### 9. **ElementNotSelectableException**
+   - **Reason:** Trying to select an element that is not selectable.
+   - **Example:**
+     ```java
+     WebElement checkbox = driver.findElement(By.id("checkbox"));
+     checkbox.click(); // ElementNotSelectableException if disabled
+     ```
+
+### 10. **ElementNotInteractableException**
+   - **Reason:** Element is present but cannot be interacted with (e.g., disabled or hidden).
+   - **Example:**
+     ```java
+     WebElement button = driver.findElement(By.id("disabledButton"));
+     button.click(); // ElementNotInteractableException
+     ```
+
+### 11. **InvalidElementStateException**
+   - **Reason:** Element is in an invalid state (e.g., read-only field).
+   - **Example:**
+     ```java
+     WebElement textField = driver.findElement(By.id("readOnlyField"));
+     textField.sendKeys("Test"); // InvalidElementStateException
+     ```
+
+### 12. **InvalidSelectorException**
+   - **Reason:** Invalid syntax in CSS selector or XPath.
+   - **Example:**
+     ```java
+     driver.findElement(By.cssSelector("div[style='']")); // InvalidSelectorException
+     ```
+
+### 13. **NoSuchFrameException**
+   - **Reason:** Attempting to switch to a non-existent frame.
+   - **Example:**
+     ```java
+     driver.switchTo().frame("nonExistentFrame"); // NoSuchFrameException
+     ```
+
+### 14. **InvalidCookieDomainException**
+   - **Reason:** Trying to add a cookie to a domain different from the current one.
+   - **Example:**
+     ```java
+     driver.manage().addCookie(new Cookie("key", "value")); // InvalidCookieDomainException if on a different domain
+     ```
+
+### 15. **JavaScriptException**
+   - **Reason:** Error during JavaScript execution.
+   - **Example:**
+     ```java
+     JavascriptExecutor js = (JavascriptExecutor) driver;
+     js.executeScript("invalidFunction();"); // JavaScriptException
+     ```
+
+### 16. **ElementClickInterceptedException**
+   - **Reason:** Element is blocked by another element (e.g., a popup).
+   - **Example:**
+     ```java
+     driver.findElement(By.id("submit")).click(); // ElementClickInterceptedException if blocked
+     ```
+
+### 17. **MoveTargetOutOfBoundsException**
+   - **Reason:** Mouse is moved out of the visible window area.
+   - **Example:**
+     ```java
+     Actions actions = new Actions(driver);
+     actions.moveToElement(driver.findElement(By.id("submit"))).moveByOffset(1000, 1000).perform(); // MoveTargetOutOfBoundsException
+     ```
+
+### 18. **SessionNotCreatedException**
+   - **Reason:** WebDriver session cannot be created.
+   - **Example:**
+     ```java
+     WebDriver driver = new ChromeDriver(); // SessionNotCreatedException if incompatible browser/driver
+     ```
+
+### 19. **UnsupportedCommandException**
+   - **Reason:** Unsupported command for the current WebDriver or browser.
+   - **Example:**
+     ```java
+     driver.executeScript("unsupportedCommand()"); // UnsupportedCommandException
+     ```
+
+### 20. **ElementStateInvalidException**
+   - **Reason:** Element is in an invalid state for the action (e.g., trying to send keys to a disabled input).
+   - **Example:**
+     ```java
+     WebElement element = driver.findElement(By.id("disabledInput"));
+     element.sendKeys("Text"); // ElementStateInvalidException
+     ```
+
+### 21. **NoSuchContextException**
+   - **Reason:** Trying to switch to a non-existent context (e.g., in mobile apps).
+   - **Example:**
+     ```java
+     driver.context("nonExistentContext"); // NoSuchContextException
+     ```
+
+### 22. **FileNotFoundException**
+   - **Reason:** Specified file is not found.
+   - **Example:**
+     ```java
+     File file = new File("nonExistentFile.txt"); // FileNotFoundException
+     ```
+
+---
+
+This list covers some of the most common **Selenium exceptions** with their causes and examples for clarity. Each exception typically relates to a specific issue during test automation, and proper handling of these can improve the robustness of your Selenium tests.

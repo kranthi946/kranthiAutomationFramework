@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+  <!-- Test block for sanity group -->
+  <test name="Sanity Test" >
+  
+    <!-- Define parameters (if required) -->
+    <!-- <parameter name="browser" value="chrome"/> -->
+
+    <classes>
+      <!-- Test class to be executed -->
+      <class name="com.AI.tests.TechieDelightTest">
+      
+        <!-- Group filtering: Only execute tests from 'sanity' group -->
+        <groups>
+          <run>
+            <include name="sanity"/>
+          </run>
+        </groups>
+        
+      </class>
+    </classes>
+    
+  </test> <!-- Sanity Test -->
+
+</suite> <!-- Suite -->

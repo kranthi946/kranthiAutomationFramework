@@ -24,7 +24,7 @@ import java.time.Duration;
  * 
  * Jan 21, 2021
  * 
- * @author Amuthan Sakthivel
+ * @author kranthi
  * @version 1.0
  * @since 1.0
  */
@@ -40,7 +40,7 @@ public final class ExplicitWaitFactory {
      *                     {@link WaitStrategy}
      * @param by           By locator of the webelement
      * @return webelement Locates and return the webelement
-     * @author Amuthan Sakthivel Jan 21, 2021
+     * @author kranthi
      */
 	public static WebElement performExplicitWait(WaitStrategy waitStrategy, By by) {
 		WebElement element = null;

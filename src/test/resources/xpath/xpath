@@ -1,0 +1,33 @@
+//tagname[@attribute='value']        <!-- XPath: Selects elements by tag and attribute value; Example: //input[@type='text'] -->
+/html/body/div/ul/li[2]             <!-- XPath: Absolute path to select second <li> inside <ul> which is inside <div>; Example: /html/body/div/ul/li[2] -->
+.//tagname                          <!-- XPath: Selects any tagname in the current node; Example: .//div -->
+.//tagname[@attribute='value']      <!-- XPath: Selects child of current node with specific attribute value; Example: .//input[@id='username'] -->
+/ancestor::tagname                  <!-- XPath: Selects the ancestor element of the current element; Example: /ancestor::div -->
+/descendant::tagname                <!-- XPath: Selects all descendants (children, grandchildren); Example: /descendant::span -->
+/following-sibling::tagname         <!-- XPath: Selects the next sibling of the current node; Example: /following-sibling::p -->
+/preceding-sibling::tagname         <!-- XPath: Selects the previous sibling of the current node; Example: /preceding-sibling::h1 -->
+//div[contains(@class, 'class-name')]<!-- XPath: Selects <div> elements with class name containing 'class-name'; Example: //div[contains(@class, 'nav')] -->
+//span[text()='Sample Text']        <!-- XPath: Selects <span> with exact text 'Sample Text'; Example: //span[text()='Submit'] -->
+//input[starts-with(@id, 'prefix')]  <!-- XPath: Selects input elements where id starts with 'prefix'; Example: //input[starts-with(@id, 'user')] -->
+//button[@aria-label='submit']       <!-- XPath: Selects <button> with specific aria-label; Example: //button[@aria-label='submit'] -->
+//a[contains(@href, 'url')]          <!-- XPath: Selects <a> tag where href contains 'url'; Example: //a[contains(@href, 'login')] -->
+//input[@type='text' and @name='username']  <!-- XPath: Selects <input> with type 'text' and name 'username'; Example: //input[@type='text' and @name='username'] -->
+
+
+
+//tagname[@attribute='value']        <!-- XPath: Selects elements by tag and attribute value; Example: //input[@type='text'] -->
+#id                                  <!-- CSS: Selects element with specific id; Example: #header -->
+.classname                           <!-- CSS: Selects elements with specific class; Example: .button -->
+tagname[attribute='value']           <!-- CSS: Selects elements by attribute and value; Example: input[type='text'] -->
+tagname:first-child                  <!-- CSS: Selects the first child element of a parent; Example: ul > li:first-child -->
+tagname:nth-child(n)                 <!-- CSS: Selects the nth child element; Example: ul > li:nth-child(2) -->
+tagname:nth-of-type(n)               <!-- CSS: Selects the nth element of its type; Example: div:nth-of-type(3) -->
+tagname:hover                        <!-- CSS: Selects elements when hovered; Example: button:hover -->
+tagname:focus                        <!-- CSS: Selects elements when focused; Example: input:focus -->
+.tagname > child-tag                 <!-- CSS: Selects direct child of tagname; Example: div > p -->
+.tagname + sibling-tag               <!-- CSS: Selects next sibling of tagname; Example: h1 + p -->
+.tagname ~ sibling-tag               <!-- CSS: Selects all siblings of tagname; Example: h1 ~ p -->
+input[type='text']                   <!-- CSS: Selects input with type 'text'; Example: input[type='password'] -->
+button[aria-label='submit']          <!-- CSS: Selects button with specific aria-label; Example: button[aria-label='submit'] -->
+a[href*='url']                       <!-- CSS: Selects <a> tag where href contains 'url'; Example: a[href*='example.com'] -->
+input[name='username']               <!-- CSS: Selects <input> with name 'username'; Example: input[name='username'] -->

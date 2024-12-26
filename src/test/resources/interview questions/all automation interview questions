@@ -1,0 +1,32 @@
+
+
+try-catch-finally : 
+
+
+public class TryCatchFinallyExample {
+    public static void main(String[] args) {
+        int numerator = 10;
+        int denominator = 0; // This will cause an exception (division by zero)
+
+        try {
+            // Trying to divide by zero (this will throw an exception)
+            int result = numerator / denominator;
+            System.out.println("Result: " + result); // This won't be executed due to the exception
+        } catch (ArithmeticException e) {
+            // This block will handle the exception
+            System.out.println("Error: You cannot divide by zero!");
+        } finally {
+            // This block will always execute
+            System.out.println("This will always be executed.");
+        }
+    }
+}
+
+
+
+
+What @BeforeMethod(alwaysRun = true) Does
+The alwaysRun = true attribute ensures that the method annotated with @BeforeMethod will run regardless of whether a test method passes or fails. This can be helpful in cases where you have setup/teardown actions that must always execute, like WebDriver initialization or cleanup, even if the test itself is skipped or fails due to exclusions in the suite XML.
+
+Example Usage in Your Case:
+If you have some setup or initialization logic that should always run (e.g., WebDriver initialization in BaseTest), using alwaysRun = true guarantees that the setup method is always called before each test method is executed.

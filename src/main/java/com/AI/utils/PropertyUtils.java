@@ -55,11 +55,21 @@ public final class PropertyUtils {
 
 
 
-	// This method extra i am adding to give instructions to browsers to run in both chrome firefox and other browser
-	public static List<String> getBrowsers(ConfigProperties key) {
-		String browserConfig = get(key);  // Get the browser property (e.g., "chrome,firefox")
-		return Arrays.asList(browserConfig.split(","));  // Split the string into a list of browsers
-	}
+	/*
+	 * // This method extra i am adding to give instructions to browsers to run in
+	 * both chrome firefox and other browser 
+	 * 
+	 * public static List<String>
+	 * getBrowsers(ConfigProperties key) { String browserConfig = get(key); // Get
+	 * the browser property (e.g., "chrome,firefox") 
+	 * 
+	 * return
+	 * Arrays.asList(browserConfig.split(","));
+	 * 
+	 *  
+	 *  // Split the string into a list of
+	 * browsers }
+	 */
 
 
 }

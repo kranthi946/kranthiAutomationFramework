@@ -6,10 +6,17 @@ import driver.DriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
 import java.time.Duration;
 import java.util.List;
+
+
+
+
 
 public class Basepage {
 
@@ -188,20 +195,44 @@ public void 	signinbutton(By by, WaitStrategy waitStrategy){
 	}
 
 	public List<WebElement> getLinksText(By by) {
-		List<WebElement> li = driver.DriverManager.getDriver().findElements(By.tagName("a"));
-		int count = li.size();
-		System.out.println("Total number of links " + count);
-		// ExtentManager.getExtentTest().pass("Total no of links is "  + count);
-		/**
-		 * for(int i=0; i<li.size();i++)
-		 * {
-		 * System.out.println(li.get(i).getText());
-		 * }
-		 */
-		//li.forEach(e -> System.out.println(e.getText()));
-		return li;
-	}
+        // Get all the links
+        List<WebElement> li = driver.DriverManager.getDriver().findElements(By.tagName("a"));
+        
+        int count = li.size();
 
+        // -------------- Hard Assertion (to check if links exist) --------------
+        // We use hard assertion to ensure that there are links on the page.
+      //  Assert.assertEquals(count > 0, "No links found on the page."); // If no links found, the test will fail immediately.
+        
+        System.out.println("Total number of links: " + count);
+
+        // Create SoftAssert object to allow non-blocking assertions
+        SoftAssert softAssert = new SoftAssert();
+
+        // -------------- Soft Assertion (checking each link's text) --------------
+        // Iterate over each link to check if it has non-empty text
+        for (int i = 0; i < li.size(); i++) {
+            String linkText = li.get(i).getText();
+            System.out.println(linkText);
+            
+            // Soft assertion to ensure link text is not empty
+            softAssert.assertFalse(linkText.isEmpty(), "Link text is empty at index: " + i);
+        }
+
+        // -------------- Soft Assertion (checking for link text length) --------------
+        // You can add another condition for validating link text length
+        li.forEach(e -> {
+            String linkText = e.getText();
+            softAssert.assertTrue(linkText.length() > 0, "Link text length is 0 or less: " + linkText);
+            System.out.println(linkText);
+        });
+
+        // -------------- Finalize Soft Assertions --------------
+        // This will check and report any failures from the soft assertions
+        softAssert.assertAll(); // This will trigger the failure reports from soft assertions.
+
+        return li;
+    }
 	public void sendkeys(By by , String value , WaitStrategy waitStrategy ) {
 		WebElement element = ExplicitWaitFactory.performExplicitWait(waitStrategy, by);
 		element.sendKeys(value);

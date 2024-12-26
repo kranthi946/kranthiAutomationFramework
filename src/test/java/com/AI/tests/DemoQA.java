@@ -1,6 +1,9 @@
 package com.AI.tests;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.Test;
+import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 
 import com.AI.pages.DemoQapage;
 

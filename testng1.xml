@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="links">
 
+<suite name="Sanity - Pagelinks">
 
+  <!-- Listeners to listen to test events -->
+  <listeners>
+    <listener class-name="com.AI.listeners.ListenerClass"></listener>
+  </listeners>
 
-  <!-- Single test block with browser parameter    .. -->
-  <test name="ChromeTest">
-    <parameter name="browser" value="chrome"/>
+  <!-- Uncomment this section if you want to run multiple suite files -->
+  <!--
+  <suite-files>
+    This suite file helps in running multiple suite files in one suite.
+    <suite-file path="regression.xml"></suite-file>
+    <suite-file path="smoke.xml"></suite-file>
+    <suite-file path="sanity.xml"></suite-file>
+  </suite-files>
+  -->
+
+  <!-- Single test block with browser parameter -->
+  
+  
+  
+  <test name="Getting all links using chrome browser">
+  
+  
+  
+
+    <!-- Class to be executed -->
     <classes>
-      <class name="com.AI.tests.TechieDelightTest"/>
+      <class name="com.AI.tests.TechieDelightTest">
+      
+      
+      
+        <!-- Groups configuration for this class -->
+        <groups>
+          <run>
+            <!-- Exclude the 'smoke' group -->
+            <exclude name="smoke"/>
+            <!-- Include the 'regression' group -->
+            <include name="sanity"/>
+          </run>
+        </groups>
+      </class>
     </classes>
+    
   </test>
 
 </suite>

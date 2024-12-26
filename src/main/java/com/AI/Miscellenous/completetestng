@@ -1,0 +1,211 @@
+import org.testng.Assert;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
+
+import java.util.Arrays;
+
+public class EnhancedTestNGExample {
+
+    // Before Suite
+    @BeforeSuite
+    public void beforeSuite() {
+        System.out.println("Before Suite - This runs once before the entire suite");
+    }
+
+    // After Suite
+    @AfterSuite
+    public void afterSuite() {
+        System.out.println("After Suite - This runs once after the entire suite");
+    }
+
+    // Before Test
+    @BeforeTest
+    public void beforeTest() {
+        System.out.println("Before Test - This runs before each test method");
+    }
+
+    // After Test
+    @AfterTest
+    public void afterTest() {
+        System.out.println("After Test - This runs after each test method");
+    }
+
+    // Before Class
+    @BeforeClass
+    public void beforeClass() {
+        System.out.println("Before Class - This runs before each class");
+    }
+
+    // After Class
+    @AfterClass
+    public void afterClass() {
+        System.out.println("After Class - This runs after each class");
+    }
+
+    // Before Method
+    @BeforeMethod
+    public void beforeMethod() {
+        System.out.println("Before Method - This runs before each method");
+    }
+
+    // After Method
+    @AfterMethod
+    public void afterMethod() {
+        System.out.println("After Method - This runs after each method");
+    }
+
+    // Sample Test method 1
+    @Test(groups = "smoke")
+    public void testAddition() {
+        System.out.println("Test 1 - Running addition test");
+
+        int result = 5 + 3;
+        Assert.assertEquals(result, 8, "Addition result should be 8");
+    }
+
+    // Sample Test method 2
+    @Test(groups = "smoke")
+    public void testSubtraction() {
+        System.out.println("Test 2 - Running subtraction test");
+
+        int result = 5 - 3;
+        Assert.assertEquals(result, 2, "Subtraction result should be 2");
+    }
+
+    // Sample Test method 3 with parameterization
+    @Test(groups = "regression", dataProvider = "dataProviderExample")
+    public void testMultiplication(int a, int b, int expectedResult) {
+        System.out.println("Test 3 - Running multiplication test with params: " + a + " * " + b);
+
+        int result = a * b;
+        Assert.assertEquals(result, expectedResult, "Multiplication result should match expected");
+    }
+
+    // Sample Test method 4 - Test with expected exception
+    @Test(expectedExceptions = ArithmeticException.class, groups = "exception")
+    public void testDivisionByZero() {
+        System.out.println("Test 4 - Running division by zero test");
+
+        int result = 5 / 0;  // This will throw ArithmeticException
+    }
+
+    // Sample Test method 5 - Test with enabled and disabled
+    @Test(enabled = false)
+    public void testDisabledMethod() {
+        System.out.println("Test 5 - This test is disabled and will not run");
+    }
+
+    // Sample Test method 6
+    @Test(groups = "regression")
+    public void testStringContains() {
+        System.out.println("Test 6 - Running string contains test");
+
+        String sentence = "TestNG makes testing easy";
+        Assert.assertTrue(sentence.contains("TestNG"), "String should contain 'TestNG'");
+    }
+
+    // Soft Assert Example (to allow other tests to run even if assertion fails)
+    @Test(groups = "softassert")
+    public void testSoftAssertion() {
+        SoftAssert softAssert = new SoftAssert();
+        System.out.println("Test 7 - Running soft assertion test");
+
+        String str1 = "TestNG";
+        String str2 = "testNG";  // Notice the case difference
+
+        softAssert.assertEquals(str1, str2, "Soft Assertion: Strings should be equal (case-sensitive)");
+        softAssert.assertAll();  // Ensure all soft assertions are checked at the end
+    }
+
+    // DataProvider for parameterization
+    @DataProvider(name = "dataProviderExample")
+    public Object[][] dataProvider() {
+        return new Object[][] {
+            { 2, 3, 6 },      // a = 2, b = 3, expected result = 6
+            { 4, 5, 20 },     // a = 4, b = 5, expected result = 20
+            { 7, 8, 56 }      // a = 7, b = 8, expected result = 56
+        };
+    }
+
+    // Test with priority
+    @Test(priority = 1, groups = "priority")
+    public void testPriority1() {
+        System.out.println("Test 8 - Running priority 1 test");
+        Assert.assertTrue(true, "Priority 1 test passed");
+    }
+
+    @Test(priority = 2, groups = "priority")
+    public void testPriority2() {
+        System.out.println("Test 9 - Running priority 2 test");
+        Assert.assertTrue(true, "Priority 2 test passed");
+    }
+
+    @Test(priority = 0, groups = "priority")
+    public void testPriority0() {
+        System.out.println("Test 10 - Running priority 0 test");
+        Assert.assertTrue(true, "Priority 0 test passed");
+    }
+
+    // Test with timeout
+    @Test(timeOut = 1000, groups = "timeout")
+    public void testTimeOut() throws InterruptedException {
+        System.out.println("Test 11 - Running timeout test");
+
+        // Simulate a long operation
+        Thread.sleep(500);  // Sleeps for 500ms, which is less than 1000ms timeout
+        Assert.assertTrue(true);
+    }
+
+    @Test(timeOut = 1000, groups = "timeout")
+    public void testTimeOutFail() throws InterruptedException {
+        System.out.println("Test 12 - Running timeout failure test");
+
+        // Simulate a long operation that exceeds the timeout limit
+        Thread.sleep(1500);  // Sleeps for 1500ms, which exceeds the 1000ms timeout
+        Assert.assertTrue(true);
+    }
+
+    // Dependency Test
+    @Test(dependsOnMethods = "testAddition", groups = "dependency")
+    public void testDependency() {
+        System.out.println("Test 13 - Running dependent test after testAddition");
+
+        int result = 10 - 5;
+        Assert.assertEquals(result, 5, "Subtraction result should be 5");
+    }
+
+    // Test with enabled and disabled
+    @Test(enabled = false)
+    public void testDisabled() {
+        System.out.println("Test 14 - This test is disabled and will not run");
+    }
+
+    // Test with parallel execution group
+    @Test(groups = "parallel")
+    public void testParallelExecution1() {
+        System.out.println("Test 15 - Parallel test 1 - Thread ID: " + Thread.currentThread().getId());
+    }
+
+    @Test(groups = "parallel")
+    public void testParallelExecution2() {
+        System.out.println("Test 16 - Parallel test 2 - Thread ID: " + Thread.currentThread().getId());
+    }
+
+    // Custom Listener (implementing TestNG's ITestListener)
+    @Test
+    public void testWithListener() {
+        System.out.println("Test 17 - This test will be monitored by a listener");
+        Assert.assertTrue(true, "Test passed, listener will capture this");
+    }
+
+    // Sample method to demonstrate groups in TestNG
+    @Test(groups = { "smoke", "regression" })
+    public void testStringEquality() {
+        System.out.println("Test 18 - Running string equality test");
+
+        String str1 = "TestNG";
+        String str2 = "TestNG";
+        Assert.assertEquals(str1, str2, "Strings should be equal");
+    }
+
+}

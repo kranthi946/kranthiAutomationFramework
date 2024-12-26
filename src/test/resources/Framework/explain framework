@@ -1,0 +1,42 @@
+
+**********************************SELENIUM AUTOMATION FRAMEWORK***********************************
+
+**Automation framework** puts right things in right place in an organized way, making our test creation and maintenance easy.
+
+1. **PROGRAMMING LANGUAGE**: In our selenium framework, we are using **JAVA** language.
+
+2. **FRAMEWORK TYPE**: **Data Driven Framework** using **Page Object Model (POM)** design pattern with **Page Factory**.
+
+3. **DESIGN PATTERN (POM)**: As per the **Page Object Model**, we have maintained a class for every web page. Each web page has a separate class, and that class holds the functionality and elements of that web page. Separate classes are there for individual tests.
+
+4. **PACKAGES**: We have separate packages for **pages** and **test scripts**. All the **web page-related classes** are in the **pages** package, and all **test-related** packages are in the **test** package. All the **Test-related classes** are kept under `src/test/java` & remaining files such as **exceptions**, **listeners**, and **all page-related classes** are kept under `src/main/java`.
+   For example: **AmazonLoginPage** and **AmazonHomePage** have separate classes to store element locators. For **LoginTest**, there would be a separate class that calls methods from the **LoginPage** and **HomePage** classes.
+
+5. **REUSABLE COMPONENTS**:
+   - **Properties file**: This file stores the common information, such as which browser to use, the application URL, and the mode (**Local/Remote**). Keeping these details in a config file makes it easy to maintain and use.
+
+   - **BaseClass**: The **BaseClass** deals with all the common functions used by all pages. It is responsible for loading configurations from **property files**, initializing the **WebDriver**, handling **Explicit Waits**, and creating an object of **FileInputStream** (responsible for pointing to the file from which data should be read).
+
+   - **Utility Class**: The **Utility Class (util.java)** stores and handles functions that are repetitive in nature, such as **waits**, **capturing screenshots**, and **accessing data from Excel**, etc. This helps achieve **reusability**. It reads the **property file** and stores it in a **HashMap** for faster processing.
+
+In the `src/test/java`, we have the **TestClass** that extends **BaseTest**. We will create an object to that class and perform the actions that need to be done on the web page.
+
+- **BaseTest**: Invokes a new browser and loads the respective URL.
+  It contains `@BeforeMethod(Driver.initDriver(browser))` and `@AfterMethod (Driver.quit())`.
+
+- **Screenshots**: We use **Listeners** in our framework to capture the **screenshot** on any failure. These will be stored in a separate folder and added to the **output report**.
+
+**TestNG**: It is a framework used to achieve **assertions**, **grouping**, and **parallel execution**. It consists of annotations:
+   - `@BeforeSuite`, `@BeforeTest`, `@BeforeClass`, `@BeforeMethod`, `@Test`, `@AfterMethod`, `@AfterClass`, `@AfterTest`, `@AfterSuite`
+
+You can run your **smoke**, **sanity**, and **regression** test cases as per your need. For example, if there is a small change in your application and your team wants to run only **smoke test cases** or limited test cases, the **grouping feature** will be very helpful if you have already refined and segregated test cases into **smoke**, **sanity**, and **regression**.
+
+We use **Maven** for **build execution** and **dependency management**.
+
+**VERSION CONTROL TOOL**: We use **Git** to manage our code.
+
+**EXTENT REPORTS**: For reporting purposes, we use **Extent Reports**. It generates **HTML reports** for maintaining logs and also includes **failed test cases** in the report.
+
+---
+
+This makes the important aspects of your automation framework stand out more clearly.

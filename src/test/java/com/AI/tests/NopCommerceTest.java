@@ -1,5 +1,11 @@
 package com.AI.tests;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import com.AI.listeners.ListenerClass;
 import com.AI.pages.NopCommercepage;
 import org.testng.Assert;
@@ -12,7 +18,7 @@ public class NopCommerceTest extends BaseTest {
 	@Test
 	public void ncloginTest() throws Throwable {
 		NopCommercepage np = new NopCommercepage();
-		Assert.assertTrue(false);
+		AssertJUnit.assertTrue(false);
 		np.enterEmail().enterPassword().click();
 	}
 }
