@@ -17,11 +17,11 @@ public class ExcelUtils {
 	}
 
 
-	public static List<Map<String,String>>  getTestDetails(String sheetname) throws IOException {
+	public static List<Map<String, String>> getTestDetails(String sheetname) throws IOException {
 
 
 		//initalising the list , as this is going to be our return type
-		List<Map<String,String>>   list = null;     //  [           ]
+		List<Map<String, String>> list = null;     //  [           ]
 
 		//later return type will give list like below
 		// [{},{},{}]
@@ -35,54 +35,49 @@ public class ExcelUtils {
 
 		// getting sheet inside the work book
 
-		XSSFSheet sheet = 	wb.getSheet(sheetname);
+		XSSFSheet sheet = wb.getSheet(sheetname);
 
 		//getting last rows count
-		int rownumber = 	sheet.getLastRowNum();
+		int rownumber = sheet.getLastRowNum();
 
 		//getting last column count
 		int columnnumber = sheet.getRow(0).getLastCellNum();
 
 
-		// inside list we are string map of string , string or string , object or object .object
-		Map<String,String>  map = null;
+		// inside list we are storing  map of string , string or string , object or object .object
+		Map<String, String> map = null;
 
 		//initialise the array list also here
 		list = new ArrayList<>();
 
 
 
-		// in excel sheet how row and column works .
+	/*	The first row in the Excel UI (Row 1) is Row 0 in code.
+		The second row in the Excel UI (Row 2) is Row 1 in code.*/
 
-		// FOR EXAMPLE
-		//  0,0 | 0,1    | 0,2
-		//0 A   |   B    |C
-		//1
-		//2
-		//3
+		/*
+		* Excel UI (User Interface):
 
+Row 1: Is where you have the headers (e.g., tester, testcase, execute, etc.).
+Row 2 onwards: Is where you have your actual data (e.g., kranthi, 1, yes, chrome, ?).
+		* */
 
-//		| (0,0) | (0,1) | (0,2) | (0,3) | (0,4) | (0,5) | (0,6) | (0,7) | (0,8) | (0,9)  |
-//|-------|-------|-------|-------|-------|-------|-------|-------|-------|--------|
-//| (1,0) | (1,1) | (1,2) | (1,3) | (1,4) | (1,5) | (1,6) | (1,7) | (1,8) | (1,9)  |
-//| (2,0) | (2,1) | (2,2) | (2,3) | (2,4) | (2,5) | (2,6) | (2,7) | (2,8) | (2,9)  |
-//| (3,0) | (3,1) | (3,2) | (3,3) | (3,4) | (3,5) | (3,6) | (3,7) | (3,8) | (3,9)  |
-//| (4,0) | (4,1) | (4,2) | (4,3) | (4,4) | (4,5) | (4,6) | (4,7) | (4,8) | (4,9)  |
-//| (5,0) | (5,1) | (5,2) | (5,3) | (5,4) | (5,5) | (5,6) | (5,7) | (5,8) | (5,9)  |
-//| (6,0) | (6,1) | (6,2) | (6,3) | (6,4) | (6,5) | (6,6) | (6,7) | (6,8) | (6,9)  |
-//| (7,0) | (7,1) | (7,2) | (7,3) | (7,4) | (7,5) | (7,6) | (7,7) | (7,8) | (7,9)  |
-//| (8,0) | (8,1) | (8,2) | (8,3) | (8,4) | (8,5) | (8,6) | (8,7) | (8,8) | (8,9)  |
-//| (9,0) | (9,1) | (9,2) | (9,3) | (9,4) | (9,5) | (9,6) | (9,7) | (9,8) | (9,9)  |
+		for (int i = 1; i <= rownumber; i++) {  // Start from 1 because row 0 is header
 
 
+			map = new HashMap<>();
 
-		for(int i = 1 ; i <= rownumber ; i++) {
+			for (int j = 0; j < columnnumber; j++) {  // Loop through columns (start from 0)
+				// Row 0 contains the header values (e.g., "tester", "testcase")
+				String key = sheet.getRow(0).getCell(j).getStringCellValue();  // Column header
+				// Row i contains the actual data values (e.g., "kranthi", "1", etc.)
+				String value = sheet.getRow(i).getCell(j).getStringCellValue();  // Data for current row
+				map.put(key, value);
+			}
 
-
-
-			map  = new HashMap<>();
-
-			// {   }
+			// Add this map (which contains key-value pairs for each row) to the list
+			list.add(map);
+		}
 
 //[  { "tester": "kranthi", "testcase": "1", "execute": "yes", "browser": "chrome", "specialchar": "?" },
 //
@@ -94,77 +89,120 @@ public class ExcelUtils {
 			//kranthi	1	yes	chrome	?
 			//shravan	2	no	firefox
 
-
-			for(int j = 0 ; j<= columnnumber ;j++) {
-
-				//Explanation of getRow() and getCell()
-				//getRow(int rowIndex):
-				//
-				//This method retrieves a specific row from the sheet.
-
-				//**************************  GETROW(0) BASCIALLY MEANS GETTING FIRSTROW CELL VALUE
-				//The index starts from 0, so getRow(0) gets the first row, getRow(1) gets the second row, and so on.
-				//getCell(int cellIndex):
-				//
-				//This method retrieves a specific cell from the row.
-				//The index also starts from 0, so getCell(0) gets the first cell in the row, getCell(1) gets the second cell, etc.
-				//How It Works in Your Code
-				//Outer Loop (for (int i = 1; i <= rownumber; i++)):
-				//
-				//Starts from 1 because 0 is typically reserved for the header row (in your case).
-				//Each iteration corresponds to a different row in your sheet.
-				//Inner Loop (for (int j = 0; j <= columnnumber; j++)):
-				//
-				//Iterates through each column in the current row i.
-				//Retrieves the column name (key) from the header row using sheet.getRow(0).getCell(j).
-				//Retrieves the value from the current row i and column j using sheet.getRow(i).getCell(j).
-				//Summary of Your Code's Purpose
-				//You are building a Map where:
-				//The key is the name of the column (e.g., "tester", "testcase", "execute", etc.), taken from the first row.
-				//The value is the corresponding cell value from the current row (indexed by i).
-				//Why You Call getRow(0) Again
-				//You call getRow(0) again because you want to access the header row, which contains the keys for your map. Each inner loop iteration gives you the values from the respective cells in the current row while always referring to the first row for the keys.
-				//
-				//Example
-				//Given your table structure:
-				//
-				//lua
-				//Copy code
-				//| tester  | testcase | execute | browser | specialchar |
-				//|---------|----------|---------|---------|--------------|
-				//| kranthi | 1        | yes     | chrome  | ?            |
-				//| shravan | 2        | no      | firefox |              |
-				//In the first iteration of the outer loop (i = 1):
-				//key will be "tester" and value will be "kranthi".
-				//key will be "testcase" and value will be "1".
-				//This continues until all columns for the first row are processed.
-				//Let me know if you need any further clarification or help with this code!
-
-				String key = sheet.getRow(0).getCell(j).getStringCellValue();
-
-				System.out.println("got the key as : " + key);
-				String value =  sheet.getRow(i).getCell(j).getStringCellValue();
-
-				System.out.println("got the value as : " + value);
-
-				System.out.println("storing inside the map");
-
-				map.put(key, value);
+			System.out.println(list.size());
 
 
+			return list;
 
-			}
 
-			list.add(map);
 		}
-
-
-		System.out.println(list.size());
-
-
-		return list ;
-
-
-
 	}
+
+
+
+
+
+	/*
+	*
+	* //		| (0,0) | (0,1) | (0,2) | (0,3) | (0,4) | (0,5) | (0,6) | (0,7) | (0,8) | (0,9)  |
+//|-------|-------|-------|-------|-------|-------|-------|-------|-------|--------|
+//| (1,0) | (1,1) | (1,2) | (1,3) | (1,4) | (1,5) | (1,6) | (1,7) | (1,8) | (1,9)  |     1 row looks like but in programming 0 based so its 0 row , where our tester testcase present so i value starts from i = 1
+//| (2,0) | (2,1) | (2,2) | (2,3) | (2,4) | (2,5) | (2,6) | (2,7) | (2,8) | (2,9)  |     j have to starts from 0 because our (k,v) looks header as key  and    2 , 3 , 4row as value
+//| (3,0) | (3,1) | (3,2) | (3,3) | (3,4) | (3,5) | (3,6) | (3,7) | (3,8) | (3,9)  |
+//| (4,0) | (4,1) | (4,2) | (4,3) | (4,4) | (4,5) | (4,6) | (4,7) | (4,8) | (4,9)  |
+//| (5,0) | (5,1) | (5,2) | (5,3) | (5,4) | (5,5) | (5,6) | (5,7) | (5,8) | (5,9)  |
+//| (6,0) | (6,1) | (6,2) | (6,3) | (6,4) | (6,5) | (6,6) | (6,7) | (6,8) | (6,9)  |
+//| (7,0) | (7,1) | (7,2) | (7,3) | (7,4) | (7,5) | (7,6) | (7,7) | (7,8) | (7,9)  |
+//| (8,0) | (8,1) | (8,2) | (8,3) | (8,4) | (8,5) | (8,6) | (8,7) | (8,8) | (8,9)  |
+//| (9,0) | (9,1) | (9,2) | (9,3) | (9,4) | (9,5) | (9,6) | (9,7) | (9,8) | (9,9)  |
+*
+*
+* */
+
+
+/*
+*
+* tester 	0,0 	key 	row i 0 , j 0   -> (k,v)  -> (tester ,v)
+	        1,0	value 	row 1 , j 0       -> (k,v)  -> (tester ,kranthi)
+	*
+	*
+	* */
+
+
+/*
+always string wont be available :
+
+import org.apache.poi.ss.usermodel.*;
+
+public static List<Map<String, String>> getTestDetails(String sheetname) throws IOException {
+    List<Map<String, String>> list = new ArrayList<>();
+
+    // Open the Excel file
+    FileInputStream fis = new FileInputStream(FrameworkConstants.getExcelpath());
+    XSSFWorkbook wb = new XSSFWorkbook(fis);
+
+    // Get the sheet
+    XSSFSheet sheet = wb.getSheet(sheetname);
+
+    int rownumber = sheet.getLastRowNum();
+    int columnnumber = sheet.getRow(0).getLastCellNum();
+
+    Map<String, String> map = null;
+
+    // Loop through the rows
+    for (int i = 1; i <= rownumber; i++) {
+        map = new HashMap<>();
+
+        // Loop through the columns
+        for (int j = 0; j < columnnumber; j++) {
+
+            // Get the column header from row 0 (header row)
+            String key = sheet.getRow(0).getCell(j).getStringCellValue();
+
+            // Get the value from the current row and column
+            String value = getCellValueAsString(sheet.getRow(i).getCell(j));
+
+            // Put the key-value pair in the map
+            map.put(key, value);
+        }
+
+        // Add the map to the list
+        list.add(map);
+    }
+
+    return list;
 }
+
+// Method to handle different cell types and convert to String
+private static String getCellValueAsString(Cell cell) {
+    if (cell == null) {
+        return "";  // Return an empty string for null cells
+    }
+
+    // Handle different cell types
+    switch (cell.getCellTypeEnum()) {
+        case STRING:
+            return cell.getStringCellValue(); // Get string value
+        case NUMERIC:
+            // Check if it's a date
+            if (DateUtil.isCellDateFormatted(cell)) {
+                return cell.getDateCellValue().toString(); // Convert date to string
+            } else {
+                return String.valueOf(cell.getNumericCellValue()); // Convert number to string
+            }
+        case BOOLEAN:
+            return String.valueOf(cell.getBooleanCellValue()); // Convert boolean to string
+        case FORMULA:
+            return cell.getCellFormula(); // Get formula (as a string)
+        case BLANK:
+            return "";  // Return an empty string for blank cells
+        default:
+            return "";  // Return an empty string if the type is unknown
+    }
+}
+*/
+
+
+
+
+

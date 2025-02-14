@@ -3,6 +3,8 @@ package com.AI.pages;
 import com.AI.enums.WaitStrategy;
 import org.openqa.selenium.By;
 
+import java.util.concurrent.TimeUnit;
+
 public class AtlasContinuePage extends Basepage {
 
 
@@ -24,7 +26,8 @@ public class AtlasContinuePage extends Basepage {
     public AtlasCompleteYourRegistration continuebutton() throws InterruptedException {
 
 
-        Thread.sleep(3000);
+        driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         click(Continuebutton, WaitStrategy.CLICKABLE);
 
 

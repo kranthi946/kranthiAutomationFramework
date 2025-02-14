@@ -12,22 +12,6 @@ import java.util.List;
 
 public class TestAtlasLoginPage extends BaseTest {
 
-//    @Test
-//    public void testAtlasLogin() throws InterruptedException {
-//        // Get the list of WebDriver instances from DriverManager
-//        List<WebDriver> drivers = driver.DriverManager.getDrivers();
-//
-//        // Iterate through each WebDriver instance (for each browser)
-//        for (WebDriver driver : drivers) {
-//            // Pass the driver to your page object for this test
-//            AtlasMainUrlPage amp = new AtlasMainUrlPage(driver);  // Constructor now takes WebDriver
-//
-//            // Perform actions on the page
-//            amp.mainpagecookies().signinapp().signinpagecookies().login()
-//                    .continuebutton().skipbuttonclick().alertconfirmationtolforskip().atlasdashboardpage();
-//        }
-//    }
-//}
 
 
         @Test
@@ -39,7 +23,7 @@ public class TestAtlasLoginPage extends BaseTest {
             AtlasMainUrlPage amp = new AtlasMainUrlPage();
 
             // Perform the necessary actions on the page using the page object model
-            amp.mainpagecookies()
+            amp
                     .signinapp()
                     .signinpagecookies()
                     .login()
@@ -47,6 +31,8 @@ public class TestAtlasLoginPage extends BaseTest {
                     .skipbuttonclick()
                     .alertconfirmationtolforskip()
                     .atlasdashboardpage();
+
+
         }
 
 }

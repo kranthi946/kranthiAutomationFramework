@@ -4,7 +4,8 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Objects;
 
-import com.AI.enums.ConfigProperties;
+
+import com.AI.enums.ConfigPropertiesEnum;
 import com.AI.utils.PropertyUtils;
 import org.openqa.selenium.WebDriver;
 
@@ -51,7 +52,9 @@ public class Driver {
 			} catch (MalformedURLException e) {
 				throw new com.AI.exceptions.BrowserInvocationFailedException("Please check the capabilities of browser");
 			}
-			DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.URL));
+			DriverManager.getDriver().get(PropertyUtils.get(ConfigPropertiesEnum.URL));
+
+			DriverManager.getDriver().manage().window().maximize();
 			//DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.BROWSER));  tried but not working
 			//DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.VERSION));
 		}

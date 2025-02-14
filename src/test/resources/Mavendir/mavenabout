@@ -27,11 +27,13 @@ Maven is a powerful build automation and dependency management tool widely used 
 
 ### 2. **Build Automation**
    - Maven automates repetitive tasks such as compiling code, running tests, packaging files (e.g., creating `.jar` or `.war` files), and cleaning up.
+
    - This ensures a consistent and error-free process during development and testing.
 
 ---
 
 ### 3. **Test Execution**
+
    - Maven integrates with testing frameworks like JUnit and TestNG, allowing you to execute test cases using the Maven command (`mvn test`).
    - It ensures a structured lifecycle for executing tests and generates reports for the results.
 

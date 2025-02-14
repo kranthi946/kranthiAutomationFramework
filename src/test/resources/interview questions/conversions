@@ -1,0 +1,75 @@
+import java.util.*;
+
+public class TypeConversionExample {
+
+    public static void main(String[] args) {
+        // Initial sample data
+        String inputString = "Hello";
+        char inputChar = 'A';
+        char[] inputCharArray = {'H', 'e', 'l', 'l', 'o'};
+        String[] inputStringArray = {"One", "Two", "Three"};
+
+        // Create a Map to store the conversions
+        Map<String, Object> conversionsMap = new HashMap<>();
+
+        // 1. String to char
+        char stringToChar = inputString.charAt(0);
+        conversionsMap.put("String to Char", stringToChar);
+
+        // 2. char to String
+        String charToString = Character.toString(inputChar);
+        conversionsMap.put("Char to String", charToString);
+
+        // 3. String to char[] (character array)
+        char[] stringToCharArray = inputString.toCharArray();
+        conversionsMap.put("String to Char Array", stringToCharArray);
+
+        // 4. char[] to String
+        String charArrayToString = new String(inputCharArray);
+        conversionsMap.put("Char Array to String", charArrayToString);
+
+        // 5. String to Array (String array)
+        String[] stringToArray = inputString.split(""); // Split string into an array of characters (strings)
+        conversionsMap.put("String to Array", stringToArray);
+
+        // 6. Array to String (from String array to concatenated string)
+        String arrayToString = String.join("", inputStringArray);
+        conversionsMap.put("Array to String", arrayToString);
+
+        // 7. Array to List
+        List<String> arrayToList = Arrays.asList(inputStringArray);
+        conversionsMap.put("Array to List", arrayToList);
+
+        // 8. List to Array
+        List<String> stringList = new ArrayList<>(Arrays.asList(inputStringArray));
+        String[] listToArray = stringList.toArray(new String[0]);
+        conversionsMap.put("List to Array", listToArray);
+
+        // 9. List to String
+        String listToString = String.join(", ", arrayToList);
+        conversionsMap.put("List to String", listToString);
+
+        // 10. char[] to List (List of Characters)
+        List<Character> charArrayToList = new ArrayList<>();
+        for (char c : inputCharArray) {
+            charArrayToList.add(c);
+        }
+        conversionsMap.put("Char Array to List", charArrayToList);
+
+        // 11. List to char[] (from List of Characters to char array)
+        char[] listToCharArray = new char[charArrayToList.size()];
+        for (int i = 0; i < charArrayToList.size(); i++) {
+            listToCharArray[i] = charArrayToList.get(i);
+        }
+        conversionsMap.put("List to Char Array", listToCharArray);
+
+        // 12. String to List (List of Strings)
+        List<String> stringToList = Arrays.asList(inputString.split(""));
+        conversionsMap.put("String to List", stringToList);
+
+        // Display all conversions in the map
+        for (Map.Entry<String, Object> entry : conversionsMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + Arrays.toString(new Object[]{entry.getValue()}));
+        }
+    }
+}

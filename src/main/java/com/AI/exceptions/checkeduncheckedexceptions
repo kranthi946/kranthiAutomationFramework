@@ -1,0 +1,107 @@
+### **Checked vs Unchecked Exceptions in Java**
+
+In Java, exceptions are divided into two main categories: **Checked Exceptions** and **Unchecked Exceptions**. These two categories differ in terms of how they are handled and the requirements Java places on developers when they are thrown.
+
+#### 1. **Checked Exceptions**
+- These exceptions **must** be explicitly handled in your code, either by using a `try-catch` block or by declaring them in the method signature using the `throws` keyword.
+- They are typically used for **recoverable conditions** that the programmer should be aware of and handle explicitly.
+- **Examples**: `IOException`, `SQLException`, `ClassNotFoundException`, etc.
+
+#### 2. **Unchecked Exceptions**
+- These exceptions **do not need** to be explicitly handled or declared. They are usually **runtime exceptions** that reflect programming errors.
+- They are typically used for **programming mistakes** or conditions that cannot be easily recovered from (e.g., logic errors, invalid inputs, etc.).
+- **Examples**: `NullPointerException`, `ArrayIndexOutOfBoundsException`, `IllegalArgumentException`, etc.
+
+### Key Differences Between Checked and Unchecked Exceptions
+
+| **Feature**                     | **Checked Exceptions**                                 | **Unchecked Exceptions**                                 |
+|----------------------------------|--------------------------------------------------------|----------------------------------------------------------|
+| **Definition**                   | Exceptions that are checked at compile-time.           | Exceptions that are checked at runtime (or not checked). |
+| **When are they checked?**       | At **compile-time**. You must handle them explicitly.  | At **runtime**. Not checked by the compiler.             |
+| **Handling Requirement**         | Must be handled using `try-catch` or declared with `throws`. | Can be handled, but not required.                        |
+| **Inheritance**                  | Direct or indirect subclass of `Exception` (excluding `RuntimeException`). | Direct or indirect subclass of `RuntimeException`.       |
+| **Common Examples**              | `IOException`, `SQLException`, `ClassNotFoundException`, `FileNotFoundException` | `NullPointerException`, `ArrayIndexOutOfBoundsException`, `IllegalArgumentException` |
+| **Why Use Them?**                 | Used when the programmer can recover from the exception (e.g., I/O errors, file not found). | Used for errors in logic or conditions that are typically not recoverable (e.g., null pointer, illegal argument). |
+| **Compile-time vs. Runtime**     | **Compile-time** checking forces you to handle the exception. | **Runtime** checking does not force you to handle the exception. |
+| **Declaration**                  | Must be declared using `throws` in the method signature or caught with `try-catch`. | No need to declare or catch explicitly. |
+| **Example of Use Case**          | Handling external resources (files, network connections, database queries). | Handling errors that reflect bugs or illegal input in code (e.g., dereferencing null). |
+
+---
+
+### **When to Use Checked vs Unchecked Exceptions**
+
+- **Checked Exceptions**:
+  - **Use cases**: When the application can **recover** from the exception. For example, if a file cannot be found, the program might attempt to ask the user for a valid file or provide a default behavior. Similarly, network or database failures may be recoverable through retries or alternative approaches.
+  - **Example**: `IOException` when reading a file or `SQLException` when a database query fails.
+
+  **When to use**:
+  - When you have **external resources** (files, databases, network calls) that could fail in a predictable way, and you want to ensure the program handles these failures gracefully.
+  - When you want to force the caller to **acknowledge and handle** the error, and there is a clear **recovery mechanism** available.
+
+- **Unchecked Exceptions**:
+  - **Use cases**: When the exception represents a **programming error** (e.g., invalid logic, invalid inputs). These are typically cases where the program cannot easily recover.
+  - **Example**: `NullPointerException` when accessing an object that hasn't been initialized, or `ArrayIndexOutOfBoundsException` when accessing an array with an invalid index.
+
+  **When to use**:
+  - When the error is due to **bugs** in the code or unexpected behavior, and there is no reasonable way to recover from it. For example, trying to access a null object, or performing an illegal operation (like dividing by zero).
+  - **Runtime exceptions** should be used when an error can only be prevented with proper programming practices (like null checks or validation).
+
+---
+
+### **Explicit vs Implicit Handling of Exceptions**
+
+When you handle an exception explicitly or implicitly, it refers to whether or not you **formally handle the exception** in the code.
+
+1. **Explicit Handling**: This means you **specifically write code** to catch and handle exceptions, either using `try-catch` blocks or by declaring the exception using `throws` in method signatures.
+
+   - **Example**:
+     ```java
+     try {
+         // Code that may throw an exception
+         FileReader reader = new FileReader("config.txt");
+     } catch (IOException e) {
+         // Handling the exception explicitly
+         System.out.println("Error: " + e.getMessage());
+     }
+     ```
+
+   - **Why Explicit Handling?**
+     - You **anticipate** the error (like a file not being found), and you have a recovery plan in place (e.g., prompt the user to select another file, use a default file, etc.).
+     - With **checked exceptions**, you are forced to either catch the exception or declare it to be thrown further up the call stack.
+
+2. **Implicit Handling**: This refers to **not having to explicitly catch or declare the exception**. The exception is automatically handled or ignored by Java if it's unchecked, and the exception can propagate until it is either handled or results in the termination of the program.
+
+   - **Example**:
+     ```java
+     // No need to explicitly handle this exception in the method
+     String s = null;
+     int length = s.length();  // This will throw a NullPointerException
+     ```
+
+   - **Why Implicit Handling?**
+     - **Unchecked exceptions** (like `NullPointerException`, `IllegalArgumentException`, etc.) do not require explicit handling.
+     - The program can **let the exception propagate** if there’s no way to recover from it. It's often a sign that the code has a bug or an illegal state.
+
+---
+
+### **Example Table Comparison for Explicit and Implicit Handling**
+
+| **Aspect**                      | **Checked Exceptions**                                   | **Unchecked Exceptions**                                  |
+|----------------------------------|----------------------------------------------------------|-----------------------------------------------------------|
+| **Compilation Requirement**      | Must be handled **explicitly** (either `try-catch` or `throws`) | No need for explicit handling; handled implicitly by JVM |
+| **Method Declaration**           | Methods must declare thrown exceptions with `throws`      | Methods **do not** need to declare unchecked exceptions.  |
+| **Handling Responsibility**      | The caller of the method is responsible for handling the exception. | The caller **is not required** to handle the exception.   |
+| **Error Recovery**               | **May be recoverable** (e.g., retrying a file operation). | **Not recoverable**—typically a programming error.        |
+| **Forceful Handling**            | **Required**—If you don’t handle a checked exception, your program won’t compile. | **Optional**—Unchecked exceptions can propagate without being caught. |
+| **Example of Implicit Handling** | Not applicable—must handle using `try-catch` or `throws` | `NullPointerException`, `ArrayIndexOutOfBoundsException`, `IllegalArgumentException` |
+| **Example of Explicit Handling** | `IOException`, `SQLException`, `ClassNotFoundException`  | `ArithmeticException`, `NullPointerException`             |
+
+---
+
+### **When to Use Explicit Handling vs Implicit Handling**
+
+- **Use Explicit Handling**:
+  - **Checked Exceptions**: You should handle checked exceptions explicitly when the program has a reasonable way to recover from the error. You either handle it within the method (`try-catch`) or propagate it using `throws` if the calling method needs to address it.
+
+- **Use Implicit Handling**:
+  - **Unchecked Exceptions**: These exceptions usually represent **programming bugs** or errors that **cannot be recovered** from in a meaningful way. Since the error is often unavoidable, it is typically allowed to propagate without explicit handling.

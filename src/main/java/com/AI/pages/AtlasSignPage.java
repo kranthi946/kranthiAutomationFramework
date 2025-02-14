@@ -3,6 +3,8 @@ package com.AI.pages;
 import com.AI.enums.WaitStrategy;
 import org.openqa.selenium.By;
 
+import java.util.concurrent.TimeUnit;
+
 public class AtlasSignPage extends Basepage {
 
 
@@ -19,7 +21,8 @@ public class AtlasSignPage extends Basepage {
 
     public AtlasSignPage signinpagecookies() throws InterruptedException {
 
-        Thread.sleep(5000);
+        driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         cookies(cookies, WaitStrategy.CLICKABLE);
 
         System.out.println("cookies clicked");
@@ -32,19 +35,22 @@ public class AtlasSignPage extends Basepage {
     public AtlasContinuePage login() throws InterruptedException {
 
 
-        Thread.sleep(2000);
+        driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         System.out.println("username  passing");
         username(username,"kattakranthikumar333@gmail.com", WaitStrategy.VISIBLE);
 
         System.out.println("username passed ");
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 
         System.out.println("password passing ");
         password(password,"Kranthi@333",WaitStrategy.VISIBLE);
         System.out.println("password sent ");
 
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 
+        signinpagecookies() ;
+        Thread.sleep(5000);
         System.out.println("signin button next  ");
         signinbutton(signin,WaitStrategy.CLICKABLE);
 

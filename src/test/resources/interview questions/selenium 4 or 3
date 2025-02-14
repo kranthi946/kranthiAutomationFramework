@@ -1,5 +1,9 @@
 
 
+
+
+
+
 ### 1. **WebDriver Protocol**
    - **Selenium 4:** Fully adopts the **W3C WebDriver** standard, improving consistency and reliability across browsers.
    - **Selenium 3:** Used a proprietary **JSON Wire Protocol**, leading to occasional inconsistencies.

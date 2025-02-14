@@ -1,0 +1,151 @@
+Great question! Let's dive into how **enums** and **config properties** are **coupled** (connected) in your code.
+
+In your code, **enums** serve as a **type-safe, structured representation** of property keys, and **config properties** (which are stored in a `config.properties` file) hold the actual values for those keys. The coupling happens when you **map the enum constants** to the property keys in the properties file.
+
+I'll break down the relationship between enums and config properties step by step:
+
+---
+
+### 1. **Enum as a Key Representation**
+
+The **enum** (`ConfigProperties` in your code) represents the **set of keys** that are valid for your configuration.
+
+In your example:
+```java
+public enum ConfigProperties {
+    USERNAME, PASSWORD, TIMEOUT;
+}
+```
+
+- Each constant (`USERNAME`, `PASSWORD`, `TIMEOUT`) represents a **logical key** that you will look up in the `config.properties` file.
+- Enums allow us to define these keys in a centralized, type-safe way, so you can refer to them consistently in your code.
+
+The enum constants are essentially the **symbolic names** for the property keys. They act as **placeholders** for the actual key names in the properties file.
+
+---
+
+### 2. **config.properties File**
+
+The `config.properties` file is where the actual **values for each property key** are stored. For example:
+
+```properties
+username=admin
+password=secret
+timeout=5000
+```
+
+In this file:
+- The **keys** are `username`, `password`, and `timeout`.
+- The **values** are `admin`, `secret`, and `5000`.
+
+### 3. **Mapping Enum Constants to Property Keys**
+
+Now, **how are these enums coupled with the keys in the `config.properties` file?**
+
+In your `PropClass2` utility class, the **enum constants** are **converted into lowercase keys** and then used to **fetch values** from the properties file.
+
+#### Here's the relevant code from `PropClass2`:
+
+```java
+static {
+    try (FileInputStream file = new FileInputStream(FrameworkConstants.getConfigfilepath())) {
+        property.load(file);
+
+        CONFIGMAP.putAll(property.entrySet().stream().collect(Collectors.toMap(
+            entry -> String.valueOf(entry.getKey()).toLowerCase(),
+            entry -> String.valueOf(entry.getValue()).toLowerCase()
+        )));
+    } catch (IOException e) {
+        throw new PropertyFileUsageException("Failed to load property file", e);
+    }
+}
+```
+
+- The **`entry.getKey()`** represents the **key** from the `config.properties` file (like `"username"` or `"password"`).
+- The **`entry.getValue()`** represents the corresponding **value** for that key (like `"admin"` or `"secret"`).
+
+These keys and values are **loaded into the `CONFIGMAP`**.
+
+But notice that the keys are converted to **lowercase** using `entry.getKey().toLowerCase()`. This ensures that the keys in your map are case-insensitive and match the `enum` constants when they are converted to lowercase later on.
+
+#### The key point here:
+- The **enum constants** (like `ConfigProperties.USERNAME`) are linked to **property keys** (like `"username"`) when you **access the values** in the `config.properties` file using the `CONFIGMAP`.
+
+---
+
+### 4. **Fetching Property Values Using Enums**
+
+Now, the coupling between **enums** and **config properties** becomes more apparent when you access the property values using the `PropClass2.get()` method.
+
+```java
+public static String get(ConfigProperties key) {
+    if (key == null || !CONFIGMAP.containsKey(key.name().toLowerCase())) {
+        throw new PropertyFileUsageException(
+                "Property name '" + key + "' not found. Please check the config.properties file.");
+    }
+    return CONFIGMAP.get(key.name().toLowerCase());
+}
+```
+
+Here’s the step-by-step breakdown of what happens:
+
+1. **Enum constant** (like `ConfigProperties.USERNAME`) is passed into the `get()` method.
+
+2. **`key.name().toLowerCase()`**: The `name()` method of the enum returns the string representation of the enum constant, like `"USERNAME"`. The `toLowerCase()` converts it to `"username"`, which matches the **key** in the `config.properties` file.
+
+3. **Check if the key exists in `CONFIGMAP`**: The `get()` method checks if the **converted enum name** (`"username"`) exists as a key in the `CONFIGMAP`.
+
+4. **Return the property value**: If the key exists in the map, the corresponding **value** (like `"admin"`) is returned.
+
+---
+
+### 5. **Coupling Example in Action**
+
+Let’s walk through an example of how the enum and the property file are coupled:
+
+#### Step 1: `ConfigProperties` Enum
+```java
+public enum ConfigProperties {
+    USERNAME, PASSWORD, TIMEOUT;
+}
+```
+
+#### Step 2: `config.properties` File
+```properties
+username=admin
+password=secret
+timeout=5000
+```
+
+#### Step 3: Code Execution
+
+- You call `PropClass2.get(ConfigProperties.USERNAME)`.
+
+- Inside the `get()` method:
+  - The `name()` of `ConfigProperties.USERNAME` is `"USERNAME"`.
+  - It’s converted to lowercase: `"username"`.
+  - The method then looks up `"username"` in the `CONFIGMAP`.
+  - If found, it returns the value `"admin"` from the properties file.
+
+---
+
+### 6. **The Coupling Relationship**
+
+In summary, **the enum constants serve as a structured, type-safe reference to the keys in the `config.properties` file**, and they are **coupled** to the property values in the following way:
+
+- **Enum constants** (like `ConfigProperties.USERNAME`) are **mapped** to **property keys** (like `"username"`) in the `config.properties` file.
+- When you call `PropClass2.get(ConfigProperties.USERNAME)`, the enum constant is **converted to a string key** (e.g., `"username"`) that **matches** the property key in the properties file.
+- The **value** for that key (`"admin"`) is then fetched from the `CONFIGMAP`, which was populated from the `config.properties` file during class initialization.
+
+This **coupling** ensures that your code is:
+- **Type-safe** (using enums ensures valid keys),
+- **Consistent** (you use enums everywhere for property keys), and
+- **Easier to maintain** (if you change a key in the enum, the code will fail to compile if you forget to update it somewhere).
+
+---
+
+### Why This is Helpful:
+1. **Safety and reliability**: By using enums, you reduce the chances of using the wrong key or mistyping a property name.
+2. **Centralized control**: All the valid keys are defined in the enum, so you can easily manage and update them without searching through the entire codebase.
+3. **Consistency**: The enum and property file values stay in sync, and you avoid problems caused by using magic strings directly.
+

@@ -1,6 +1,7 @@
 package driver;
 
-import com.AI.enums.ConfigProperties;
+
+import com.AI.enums.ConfigPropertiesEnum;
 import com.AI.utils.PropertyUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -22,12 +23,12 @@ public final class DriverFactory {
 	public static WebDriver getDriver(String browser) throws MalformedURLException {
 
 		WebDriver driver = null;
-		String runmode = PropertyUtils.get(ConfigProperties.RUNMODE);
+		String runmode = PropertyUtils.get(ConfigPropertiesEnum.RUNMODE);
 
 		if (browser.equalsIgnoreCase("chrome")) {
 			// ChromeOptions to configure Chrome browser settings
 			ChromeOptions chromeOptions = new ChromeOptions();
-
+			chromeOptions.addArguments("--incognito");
 			//chromeOptions.setBinary("/usr/bin/google-chrome");
 		//	chromeOptions.addArguments("--incognito");
 		//	chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--remote-allow-origins=*");

@@ -1,0 +1,100 @@
+
+### 1. `final`
+The `final` keyword is used to define constants, prevent method overriding, and prevent class inheritance.
+
+- **`final` variable**: Once initialized, the value of a final variable cannot be changed.
+- **`final` method**: A method marked `final` cannot be overridden by subclasses.
+- **`final` class**: A class marked `final` cannot be extended (no subclass).
+
+**Example:**
+```java
+class FinalExample {
+    final int CONSTANT_VALUE = 100;  // final variable
+
+    final void displayMessage() {   // final method
+        System.out.println("This is a final method.");
+    }
+}
+
+class SubClass extends FinalExample {
+    // The following would cause an error:
+    // void displayMessage() {
+    //     System.out.println("Trying to override a final method.");
+    // }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        FinalExample obj = new FinalExample();
+        System.out.println(obj.CONSTANT_VALUE);  // 100
+        obj.displayMessage();  // This is a final method.
+    }
+}
+```
+
+### 2. `finally`
+The `finally` block is used in conjunction with `try` and `catch` to ensure that certain code is always executed, regardless of whether an exception is thrown or not.
+
+**Example:**
+```java
+public class FinallyExample {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0;  // Will cause ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught: " + e);
+        } finally {
+            // This block is always executed, even if an exception occurs
+            System.out.println("Finally block executed.");
+        }
+    }
+}
+```
+Output:
+```
+Exception caught: java.lang.ArithmeticException: / by zero
+Finally block executed.
+```
+
+### 3. `finalize`
+The `finalize()` method is defined in the `Object` class and is called by the garbage collector before an object is destroyed. However, it's generally not recommended to rely on `finalize()` because it's unpredictable and deprecated in newer versions of Java (Java 9 and beyond).
+
+**Example:**
+```java
+class FinalizeExample {
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Finalize method called for object: " + this);
+        super.finalize();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        FinalizeExample obj = new FinalizeExample();
+        obj = null;  // Object becomes eligible for garbage collection
+
+        // Suggesting garbage collection
+        System.gc();
+
+        // Wait a moment to allow finalize to be called
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+```
+Output (Note: The `finalize()` method may not always be called immediately):
+```
+Finalize method called for object: FinalizeExample@15db9742
+```
+
+### Summary:
+
+
+- **`final`**: Used to define constants, prevent method overriding, and prevent class inheritance.
+- **`finally`**: A block of code in exception handling that always executes.
+- **`finalize()`**: A method used for object cleanup before garbage collection (deprecated in recent versions of Java).

@@ -1,5 +1,7 @@
 package com.AI.Reports;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 import com.AI.constants.FrameworkConstants;
@@ -28,7 +30,7 @@ public final class ExtentReport {   // Main intention was not use test reports i
         extent.flush();
         
         // Automatically browser will open 
-       // Desktop.getDesktop().browse(new File(FrameworkConstants.getReportPath()).toURI()); 
+        Desktop.getDesktop().browse(new File(FrameworkConstants.getReportPath()).toURI());
     }
 
     public static void createTest(String testCaseName){

@@ -1,0 +1,92 @@
+Ah, I see what you're asking now! You are referring to the **Excel grid structure** and how rows and columns are represented in Excel. You're absolutely right to bring up the distinction.
+
+### In Excel:
+- **Rows** are numbered vertically (e.g., 1, 2, 3, 4...).
+- **Columns** are labeled alphabetically (e.g., A, B, C, D, E...).
+
+In your case:
+
+- **Row 1** (not **Row 0**) is the first **data row**.
+- **Row 0** in your example would typically refer to the first **header row**, which holds the **column names** (like "tester", "testcase", "execute", etc.).
+
+But I understand that you're pointing out that in Excel, **the header row is on the first row (Row 1)** when we consider Excel's user interface, and the data starts from **Row 2** (which is often Row 1 in code).
+
+### Let's clarify this:
+
+1. **Excel UI (User Interface)**:
+   - **Row 1**: Is where you have the **headers** (e.g., `tester`, `testcase`, `execute`, etc.).
+   - **Row 2 onwards**: Is where you have your **actual data** (e.g., `kranthi`, `1`, `yes`, `chrome`, `?`).
+
+2. **In Code** (when working with libraries like Apache POI in Java):
+   - The rows are **0-indexed**. This means:
+     - Row 0: The **first row** (header row).
+     - Row 1: The **second row**, where actual data starts.
+   - You access rows and columns using their **0-based indices** in the code, so Row 0 is the header, and Row 1 is the first data row.
+
+### To Illustrate:
+
+| **Excel UI (Human View)** | **Excel Code (0-indexed)** |
+|---------------------------|----------------------------|
+| Row 1 → Header            | Row 0 → Header             |
+| Row 2 → Data (1st row)    | Row 1 → Data (1st row)     |
+| Row 3 → Data (2nd row)    | Row 2 → Data (2nd row)     |
+
+### Why do we use **Row 0** as the header in the code?
+
+In programming (especially when using libraries like Apache POI for Java), Excel sheets are **0-indexed**. This means:
+
+- The first row in the Excel UI (Row 1) is **Row 0** in code.
+- The second row in the Excel UI (Row 2) is **Row 1** in code.
+
+### Example Mapping (Code vs UI):
+
+For the Excel sheet:
+
+| **A**       | **B**       | **C**      | **D**      | **E**        |
+|-------------|-------------|------------|------------|--------------|
+| **tester**  | **testcase**| **execute**| **browser**| **specialchar**|
+| **kranthi** | 1           | yes        | chrome     | ?            |
+| **shravan** | 2           | no         | firefox    | .            |
+
+- **Excel UI** (Human view):
+  - Row 1 (header): **tester**, **testcase**, **execute**, **browser**, **specialchar**.
+  - Row 2 (data): **kranthi**, **1**, **yes**, **chrome**, **?**.
+  - Row 3 (data): **shravan**, **2**, **no**, **firefox**, **.**.
+
+- **In code** (0-indexed):
+  - **Row 0**: Contains the headers (e.g., `tester`, `testcase`, `execute`, `browser`, `specialchar`).
+  - **Row 1**: Contains the first data row (e.g., `kranthi`, `1`, `yes`, `chrome`, `?`).
+  - **Row 2**: Contains the second data row (e.g., `shravan`, `2`, `no`, `firefox`, `.`).
+
+### Why is Row 0 typically the **Header**?
+
+In code, we typically use **Row 0** to hold the column headers because:
+- It gives us a **key-value** pair when we create a map of column names and data values.
+- In the loop, when you are fetching the data, the first row (Row 0) will provide the column names (keys), and the subsequent rows (Row 1, Row 2, etc.) will provide the corresponding values.
+
+For example:
+
+- When you loop over the rows, the **header row** (Row 0) provides the keys (`tester`, `testcase`, etc.).
+- The **data rows** (Row 1, Row 2, etc.) provide the values (`kranthi`, `1`, `yes`, etc.).
+
+### Here's the Correct Loop Example:
+
+```java
+for (int i = 1; i <= rownumber; i++) { // start from 1 to skip the header row
+    Map<String, String> map = new HashMap<>();
+
+    for (int j = 0; j < columnnumber; j++) { // Loop through columns
+        String key = sheet.getRow(0).getCell(j).getStringCellValue(); // Get header value
+        String value = sheet.getRow(i).getCell(j).getStringCellValue(); // Get data value
+        map.put(key, value);
+    }
+    list.add(map); // Add map to the list
+}
+```
+
+### Summary:
+- **Excel UI** starts at **Row 1** for headers, but in code, **Row 0** is typically the **header row** because of **zero-based indexing**.
+- **Row 1** in Excel UI corresponds to **Row 0** in code, and **Row 2** in Excel UI corresponds to **Row 1** in code.
+- You generally **skip Row 0** (header row) when processing data, so you start from **Row 1** in code.
+
+I hope this clears up the confusion! Let me know if you need further details.

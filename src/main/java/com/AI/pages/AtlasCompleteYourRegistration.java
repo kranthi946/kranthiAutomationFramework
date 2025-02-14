@@ -17,7 +17,7 @@ public class AtlasCompleteYourRegistration extends Basepage{
 
     public AtlasCompleteYourRegistration skipbuttonclick() throws InterruptedException {
 
-Thread.sleep(3000);
+Thread.sleep(5000);
         skipbutton(skip, WaitStrategy.CLICKABLE);
 
         return this;
@@ -29,7 +29,7 @@ Thread.sleep(3000);
     public  AtlasDashboardPage  alertconfirmationtolforskip() throws InterruptedException {
 
 
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         confirmskip(alertconfirmskipbutton, WaitStrategy.PRESENCE,10, driver.DriverManager.getDriver());
 

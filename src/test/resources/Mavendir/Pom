@@ -74,3 +74,14 @@
 - Simplifies collaboration by allowing others to replicate the project environment with just the `pom.xml`.
 
 In short, `pom.xml` is the heart of a Maven project.
+
+
+Key Differences between Normal (Single-Module) and Multi-Module POMs:
+Parent POM: Multi-module projects typically use a parent POM to define shared configurations, which child modules inherit.
+Modules Section: In multi-module POM, the <modules> section is used to list the sub-projects (modules) that belong to the parent project.
+Inheritance: Child modules inherit configurations like dependencies and plugin versions from the parent POM.
+Dependency Management: In multi-module projects, dependency versions are often defined at the parent level and managed for child modules to avoid duplication.
+Conclusion
+Maven POM: A Maven POM file defines the project configuration, dependencies, plugins, and build instructions for Maven. It is essential for managing your project lifecycle.
+Normal POM: Typically refers to a standard, single-module Maven project.
+Multi-Module POM: Used for large projects that require multiple sub-modules to share common configurations and dependencies.

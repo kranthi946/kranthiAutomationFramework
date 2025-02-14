@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="CompleteTestSuite" parallel="tests" thread-count="3" >
+
+    <!-- Suite-level parameters -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="url" value="https://www.example.com"/>
+
+    <!-- The suite will contain three tests, each running in parallel with 3 threads -->
+    <test name="TestGroup1" parallel="classes" thread-count="2">
+        <!-- Test-level parameters -->
+        <parameter name="env" value="QA"/>
+
+        <classes>
+            <!-- Class-level parameters -->
+            <class name="com.example.tests.TestClass1">
+                <parameter name="data1" value="data1_value"/>
+            </class>
+            <class name="com.example.tests.TestClass2">
+                <parameter name="data2" value="data2_value"/>
+            </class>
+        </classes>
+    </test>
+
+    <test name="TestGroup2" parallel="methods" thread-count="4">
+        <!-- This test runs methods in parallel -->
+
+        <classes>
+            <class name="com.example.tests.TestClass3"/>
+            <class name="com.example.tests.TestClass4"/>
+        </classes>
+    </test>
+
+    <test name="TestGroup3">
+        <!-- No parallel execution for this test group -->
+        <classes>
+            <class name="com.example.tests.TestClass5"/>
+        </classes>
+    </test>
+
+    <!-- Test with data provider -->
+    <test name="DataProviderTest">
+        <parameter name="inputValue" value="TestData"/>
+        <classes>
+            <class name="com.example.tests.DataProviderTestClass">
+                <methods>
+                    <include name="testMethod"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- A Test with group configuration -->
+    <test name="GroupTest">
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <exclude name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.tests.TestClassWithGroups"/>
+        </classes>
+    </test>
+
+    <!-- A Test with listeners -->
+    <test name="ListenerTest">
+        <listeners>
+            <!-- Add a listener (e.g., an implementation of ITestListener) -->
+            <listener class-name="com.example.listeners.TestListener"/>
+        </listeners>
+        <classes>
+            <class name="com.example.tests.TestClassWithListener"/>
+        </classes>
+    </test>
+
+    <!-- Test with an invocation count -->
+    <test name="InvocationCountTest">
+        <classes>
+            <class name="com.example.tests.TestClassWithInvocationCount">
+                <methods>
+                    <include name="testMethod"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Parallel Execution of Methods -->
+    <test name="MethodLevelParallelTest" parallel="methods" thread-count="2">
+        <classes>
+            <class name="com.example.tests.TestClassWithParallelMethods"/>
+        </classes>
+    </test>
+
+</suite>

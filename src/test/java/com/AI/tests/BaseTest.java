@@ -1,5 +1,6 @@
 package com.AI.tests;
 
+import com.AI.enums.ConfigPropertiesEnum;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
@@ -16,7 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import com.AI.constants.FrameworkConstants;
-import com.AI.enums.ConfigProperties;
+
 import com.AI.utils.PropertyUtils;
 
 import driver.Driver;
@@ -68,7 +69,7 @@ public class BaseTest {
 		
 		//   browser = System.getProperty("browser", "chrome");   this was from xml to main test to base test it will flow to driver class 
 
-		String browser = PropertyUtils.get(ConfigProperties.BROWSER);
+		String browser = PropertyUtils.get(ConfigPropertiesEnum.BROWSER);
 		Driver.initDriver(browser);
 	//	List<String> browsers = PropertyUtils.getBrowsers(ConfigProperties.BROWSER);
 	  //  String version = PropertyUtils.get(ConfigProperties.VERSION);

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.AI.constants.FrameworkConstants;
-import com.AI.enums.ConfigProperties;
+import com.AI.enums.ConfigPropertiesEnum;
 import com.AI.exceptions.PropertyFileUsageException;
 
 
@@ -17,10 +17,10 @@ import com.AI.exceptions.PropertyFileUsageException;
 public final class PropertyUtils {
 
 	private static Properties property = new Properties();
-	
-	
-	
-	
+
+
+
+
 	private static final Map<String, String> CONFIGMAP = new HashMap<>();
 	/**
 	 * Private constructor to avoid external instantiation
@@ -44,14 +44,21 @@ public final class PropertyUtils {
 		}
 	}
 
-	
-	public static String get(ConfigProperties key) {
+
+	public static String get(ConfigPropertiesEnum key) {
 		if (Objects.isNull(key) || Objects.isNull(CONFIGMAP.get(key.name().toLowerCase()))) {
-			throw new PropertyFileUsageException(
-					"Property name " + key + " is not found. Please check config.properties");
+			// Creating and throwing PropertyFileUsageException with message and cause
+			String errorMessage = "Property name '" + key + "' is not found. Please check config.properties.";
+			Throwable cause = new NullPointerException("The property could not be found in the config map.");
+
+			// Throwing the custom exception with both message and cause
+			throw new PropertyFileUsageException(errorMessage, cause);
 		}
+
+		// Return the property value if found
 		return CONFIGMAP.get(key.name().toLowerCase());
 	}
+
 
 
 
